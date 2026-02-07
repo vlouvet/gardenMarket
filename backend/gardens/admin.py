@@ -15,7 +15,7 @@ class PlantProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ("plant", "type", "unit", "price", "status")
+    list_display = ("plant", "type", "unit", "price", "status", "is_hidden")
 
 
 @admin.register(Review)

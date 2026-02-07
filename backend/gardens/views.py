@@ -64,6 +64,9 @@ class ListingViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(pickup_days__contains=[pickup_day])
         if in_stock == "1":
             queryset = queryset.filter(quantity_available__gt=0)
+
+        if not (self.request.user and self.request.user.is_staff):
+            queryset = queryset.filter(is_hidden=False)
         self._location = None
         if address or (lat and lon):
             self._location = self._resolve_location(address, lat, lon)
@@ -145,6 +148,8 @@ class ListingViewSet(viewsets.ModelViewSet):
             for field in ["price", "quantity_available", "pickup_window", "pickup_days"]:
                 if field in payload:
                     setattr(listing, field, payload[field])
+            if "status" in payload:
+                listing.status = payload["status"]
             listing.save()
             updated.append(listing.id)
         return Response({"updated": updated})
@@ -187,3 +192,31 @@ class AdminListingViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return Listing.objects.select_related("plant", "plant__gardener").all()
+
+    @action(detail=True, methods=["post"], permission_classes=[permissions.IsAdminUser])
+    def hide(self, request, pk=None):
+        listing = self.get_object()
+        listing.is_hidden = True
+        listing.save(update_fields=["is_hidden"])
+        return Response(ListingSerializer(listing).data)
+
+    @action(detail=True, methods=["post"], permission_classes=[permissions.IsAdminUser])
+    def show(self, request, pk=None):
+        listing = self.get_object()
+        listing.is_hidden = False
+        listing.save(update_fields=["is_hidden"])
+        return Response(ListingSerializer(listing).data)
+
+    @action(detail=True, methods=["post"], permission_classes=[permissions.IsAdminUser])
+    def pause(self, request, pk=None):
+        listing = self.get_object()
+        listing.status = Listing.Status.PAUSED
+        listing.save(update_fields=["status"])
+        return Response(ListingSerializer(listing).data)
+
+    @action(detail=True, methods=["post"], permission_classes=[permissions.IsAdminUser])
+    def unpause(self, request, pk=None):
+        listing = self.get_object()
+        listing.status = Listing.Status.ACTIVE
+        listing.save(update_fields=["status"])
+        return Response(ListingSerializer(listing).data)

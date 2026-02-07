@@ -40,6 +40,7 @@ class ListingSerializer(serializers.ModelSerializer):
             "price",
             "quantity_available",
             "status",
+            "is_hidden",
             "pickup_window",
             "pickup_days",
             "created_at",

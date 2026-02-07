@@ -39,3 +39,18 @@ def test_listing_create_with_eligible_center(
     response = api_client.post("/api/listings/", data=payload, format="json")
     assert response.status_code == status.HTTP_201_CREATED
     assert Listing.objects.filter(plant=plant_profile).exists()
+
+
+@pytest.mark.django_db
+def test_hidden_listing_not_visible_to_public(api_client, plant_profile):
+    listing = Listing.objects.create(
+        plant=plant_profile,
+        type="PRODUCE",
+        unit="lb",
+        price=4.50,
+        quantity_available=5,
+        is_hidden=True,
+    )
+    response = api_client.get("/api/listings/")
+    ids = [item["id"] for item in response.data]
+    assert listing.id not in ids
