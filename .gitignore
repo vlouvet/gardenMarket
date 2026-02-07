@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+.build/
+.dist/
+.eggs/
+.cache/
+.pytest_cache/
+.mypy_cache/
+.venv/
+
+# Django
+*.log
+*.pot
+*.pyc
+staticfiles/
+media/
+
+# Environment
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# Node
+node_modules/
+
+# Docker
+*.pid
+
+# OS
+.DS_Store
+Thumbs.db
