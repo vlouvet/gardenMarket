@@ -34,6 +34,15 @@ def gardener_user():
 
 
 @pytest.fixture
+def admin_user():
+    user = User.objects.create_user(email="admin@example.com", password="pass1234", role="ADMIN")
+    user.is_staff = True
+    user.is_superuser = True
+    user.save()
+    return user
+
+
+@pytest.fixture
 def approved_center():
     return DistributionCenter.objects.create(
         name="Central Hub",

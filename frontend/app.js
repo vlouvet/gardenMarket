@@ -7,36 +7,42 @@ const carouselItems = [
     title: "Heirloom Tomato Seeds",
     price: "$4.50",
     description: "Sun-loving, sweet, and resilient. Best for spring starts.",
+    pickupWindow: "Sat 9-12",
   },
   {
     category: "Seeds",
     title: "Purple Basil Seeds",
     price: "$3.25",
     description: "Aromatic and fast germinating with deep purple leaves.",
+    pickupWindow: "Sun 10-1",
   },
   {
     category: "Clones",
     title: "Strawberry Clone",
     price: "$7.00",
     description: "Rooted starter with established runners.",
+    pickupWindow: "Sat 2-4",
   },
   {
     category: "Clones",
     title: "Mint Clone",
     price: "$5.00",
     description: "Hardy cutting, perfect for teas and cocktails.",
+    pickupWindow: "Sun 9-11",
   },
   {
     category: "Produce",
     title: "Rainbow Chard Bundle",
     price: "$6.25",
     description: "Harvested within 24 hours, crisp and colorful.",
+    pickupWindow: "Sat 8-10",
   },
   {
     category: "Produce",
     title: "Cherry Tomato Pint",
     price: "$5.75",
     description: "Sweet, snackable, and never shipped long distance.",
+    pickupWindow: "Sun 11-1",
   },
 ];
 
@@ -133,7 +139,10 @@ const renderCarousel = () => {
     <h3>${item.title}</h3>
     <strong>${item.price}</strong>
     <p>${item.description}</p>
-    <span class="pill">Available now</span>
+    <div class="badge-row">
+      <span class="pill">Available now</span>
+      <span class="pill ghost">Pickup: ${item.pickupWindow}</span>
+    </div>
   `;
 };
 
@@ -191,6 +200,9 @@ const initPage = () => {
   bindLogin();
   bindCarousel();
   bindUpgrade();
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/frontend/service-worker.js").catch(() => undefined);
+  }
 };
 
 document.addEventListener("DOMContentLoaded", initPage);

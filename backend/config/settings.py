@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     "storages",
     "accounts.apps.AccountsConfig",
     "logistics",
-    "gardens",
+    "gardens.apps.GardensConfig",
     "mediahub",
     "market",
     "sensors",
@@ -150,3 +150,13 @@ LOGISTICS_MAX_DISTANCE_MILES = 100
 SENSORS_INGEST_RATE_LIMIT_PER_MIN = int(
     os.getenv("SENSORS_INGEST_RATE_LIMIT_PER_MIN", "60")
 )
+
+LISTING_LOW_STOCK_THRESHOLD = int(os.getenv("LISTING_LOW_STOCK_THRESHOLD", "2"))
+
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "no-reply@gardenmarket.local")
+
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
+STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")
+TAX_RATE = float(os.getenv("TAX_RATE", "0.0"))

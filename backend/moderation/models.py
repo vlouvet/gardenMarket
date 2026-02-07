@@ -20,3 +20,14 @@ class Report(models.Model):
     def clean(self):
         if not self.listing and not self.reported_user:
             raise ValueError("Report must target listing or user")
+
+
+class AdminAuditLog(models.Model):
+    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    action = models.CharField(max_length=200)
+    target_type = models.CharField(max_length=100, blank=True)
+    target_id = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.admin_user_id} {self.action}"

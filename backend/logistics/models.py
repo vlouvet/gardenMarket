@@ -36,6 +36,22 @@ class DistributionCenter(models.Model):
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
     )
     notes = models.TextField(blank=True)
+    capacity_per_day = models.PositiveIntegerField(default=50)
+    pickup_windows = models.JSONField(default=list, blank=True)
 
     def __str__(self) -> str:
         return self.name
+
+
+class CenterSchedule(models.Model):
+    center = models.ForeignKey(DistributionCenter, on_delete=models.CASCADE, related_name="schedules")
+    date = models.DateField()
+    capacity_override = models.PositiveIntegerField(null=True, blank=True)
+    pickup_windows = models.JSONField(default=list, blank=True)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        unique_together = ("center", "date")
+
+    def __str__(self) -> str:
+        return f"{self.center.name} {self.date}"

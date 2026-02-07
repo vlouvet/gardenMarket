@@ -10,3 +10,11 @@ class ReportCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(reporter=self.request.user)
+
+
+class ReportListView(generics.ListAPIView):
+    serializer_class = ReportSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+    def get_queryset(self):
+        return Report.objects.select_related("reporter", "listing", "reported_user").all()

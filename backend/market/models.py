@@ -30,7 +30,12 @@ class Order(models.Model):
         DistributionCenter, on_delete=models.PROTECT, null=True, blank=True
     )
     pickup_window = models.CharField(max_length=100, blank=True)
+    pickup_date = models.DateField(null=True, blank=True)
     mock_payment_reference = models.CharField(max_length=100, blank=True)
+    stripe_payment_intent_id = models.CharField(max_length=100, blank=True)
+    payment_status = models.CharField(max_length=30, blank=True)
+    checkin_code = models.CharField(max_length=64, blank=True)
+    checked_in_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

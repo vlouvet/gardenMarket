@@ -2,7 +2,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from gardens.models import GardenerProfile
+from gardens.models import GardenerProfile, Listing
 from market.models import Order
 
 from .models import Profile
@@ -43,3 +43,27 @@ class UpgradeToGardenerView(APIView):
         user.save(update_fields=["role"])
         GardenerProfile.objects.get_or_create(user=user)
         return Response(UserSerializer(user).data)
+
+
+class OnboardingStatusView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        profile = Profile.objects.filter(user=request.user).first()
+        gardener = GardenerProfile.objects.filter(user=request.user).first()
+        has_profile = bool(
+            profile
+            and profile.address_line1
+            and profile.city
+            and profile.state
+            and profile.postal_code
+        )
+        has_payout = bool(gardener and gardener.payout_details)
+        has_listing = Listing.objects.filter(plant__gardener__user=request.user).exists()
+        return Response(
+            {
+                "profile_complete": has_profile,
+                "payout_complete": has_payout,
+                "first_listing": has_listing,
+            }
+        )

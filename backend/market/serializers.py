@@ -33,8 +33,20 @@ class OrderSerializer(serializers.ModelSerializer):
             "status",
             "distribution_center",
             "pickup_window",
+            "pickup_date",
             "mock_payment_reference",
+            "stripe_payment_intent_id",
+            "payment_status",
+            "checkin_code",
+            "checked_in_at",
             "created_at",
             "items",
         )
-        read_only_fields = ("mock_payment_reference", "created_at")
+        read_only_fields = (
+            "mock_payment_reference",
+            "stripe_payment_intent_id",
+            "payment_status",
+            "checkin_code",
+            "checked_in_at",
+            "created_at",
+        )
