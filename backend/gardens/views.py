@@ -2,6 +2,7 @@ from typing import Optional
 
 from django.db.models import Q
 from rest_framework import permissions, viewsets
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from accounts.models import Profile, User
@@ -62,7 +63,11 @@ class ListingViewSet(viewsets.ModelViewSet):
 
     def _eligible_gardener_user_ids(self, centers):
         eligible_users = []
-        for profile in Profile.objects.exclude(lat__isnull=True).exclude(lon__isnull=True):
+        for profile in (
+            Profile.objects.filter(user__role="GARDENER")
+            .exclude(lat__isnull=True)
+            .exclude(lon__isnull=True)
+        ):
             for center in centers:
                 if center.lat is None or center.lon is None:
                     continue
@@ -78,3 +83,12 @@ class ListingViewSet(viewsets.ModelViewSet):
         if self.action in ["create", "update", "partial_update", "destroy"]:
             return [permissions.IsAuthenticated(), IsGardener()]
         return super().get_permissions()
+
+    def perform_create(self, serializer):
+        profile = Profile.objects.filter(user=self.request.user).first()
+        if not profile or profile.lat is None or profile.lon is None:
+            raise ValidationError("Gardener must have a geocoded location")
+        centers = eligible_centers_for_location(profile.lat, profile.lon)
+        if not centers:
+            raise ValidationError("Gardener is not within 100 miles of an approved center")
+        serializer.save()

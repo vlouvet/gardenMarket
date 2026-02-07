@@ -14,3 +14,4 @@ class SensorReadingSerializer(serializers.ModelSerializer):
     class Meta:
         model = SensorReading
         fields = ("id", "device", "timestamp", "metric", "value", "unit")
+        read_only_fields = ("device",)

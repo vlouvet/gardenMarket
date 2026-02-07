@@ -1,4 +1,5 @@
 from celery import shared_task
+from django.utils import timezone
 
 from accounts.models import Profile
 from logistics.services.geocode import geocode_address
@@ -33,5 +34,6 @@ def geocode_address_task(user_id: int) -> bool:
     profile.lat = lat
     profile.lon = lon
     profile.geocode_confidence = confidence
-    profile.save(update_fields=["lat", "lon", "geocode_confidence"])
+    profile.geocoded_at = timezone.now()
+    profile.save(update_fields=["lat", "lon", "geocode_confidence", "geocoded_at"])
     return True

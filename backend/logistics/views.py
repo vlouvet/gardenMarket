@@ -6,6 +6,7 @@ from accounts.models import User
 from logistics.models import DistributionCenter
 from logistics.serializers import DistributionCenterAdminSerializer, DistributionCenterSerializer
 from logistics.services.geocode import geocode_address
+from logistics.utils.distance import haversine_miles
 
 
 class CenterListView(generics.ListAPIView):
@@ -13,7 +14,20 @@ class CenterListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return DistributionCenter.objects.filter(status=DistributionCenter.Status.APPROVED)
+        queryset = DistributionCenter.objects.filter(status=DistributionCenter.Status.APPROVED)
+        near = self.request.query_params.get("near")
+        if near:
+            result = geocode_address(near)
+            if result:
+                lat, lon, _confidence = result
+                queryset = [
+                    center
+                    for center in queryset
+                    if center.lat is not None
+                    and center.lon is not None
+                    and haversine_miles(lat, lon, center.lat, center.lon) <= 100
+                ]
+        return queryset
 
 
 class CenterProposeView(generics.CreateAPIView):

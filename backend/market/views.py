@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from gardens.models import Listing
+from gardens.permissions import IsGardener
 from logistics.services.eligibility import validate_order_eligibility
 from market.models import Cart, CartItem, Order, OrderItem
 from market.serializers import CartItemSerializer, CartSerializer, OrderSerializer
@@ -77,3 +78,8 @@ class OrderViewSet(viewsets.ModelViewSet):
         order.mock_payment_reference = uuid.uuid4().hex
         order.save(update_fields=["status", "mock_payment_reference"])
         return Response(OrderSerializer(order).data)
+
+    @action(detail=False, methods=["get"], permission_classes=[permissions.IsAuthenticated, IsGardener])
+    def gardener(self, request):
+        orders = Order.objects.filter(items__listing__plant__gardener__user=request.user).distinct()
+        return Response(OrderSerializer(orders, many=True).data)
