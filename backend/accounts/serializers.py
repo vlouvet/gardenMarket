@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from .models import Profile
 
@@ -12,6 +13,23 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("email", "password", "role")
+
+    def validate_role(self, value: str) -> str:
+        if not value:
+            raise ValidationError("Role is required")
+        role = value.upper()
+        role_map = {
+            "GROWER": "GARDENER",
+            "GARDENER": "GARDENER",
+            "BUYER": "CONSUMER",
+            "CONSUMER": "CONSUMER",
+            "ADMIN": "ADMIN",
+        }
+        if role not in role_map:
+            raise ValidationError("Invalid role")
+        if role_map[role] == "ADMIN":
+            raise ValidationError("Admin self-registration is disabled")
+        return role_map[role]
 
     def create(self, validated_data):
         password = validated_data.pop("password")

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register | GardenMarket</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer data-domain="gardenmarket.local" src="https://plausible.io/js/script.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body data-page="register">
+    <header class="site-header">
+      <div class="logo">GardenMarket</div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Produce Gallery</a>
+        <a href="grow-with-us.html">Grow With Us</a>
+      </nav>
+    </header>
+
+    <main class="split">
+      <section class="panel">
+        <h1>Register</h1>
+        <p>Create a buyer or grower account.</p>
+        <form id="register-form" class="stack">
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" minlength="8" required />
+          </label>
+          <label>
+            Role
+            <select name="role" required>
+              <option value="BUYER">Buyer</option>
+              <option value="GROWER">Grower</option>
+            </select>
+          </label>
+          <button class="button primary" type="submit">Create account</button>
+          <p id="register-message" class="message"></p>
+        </form>
+      </section>
+
+      <section class="panel muted">
+        <h2>Already registered?</h2>
+        <p>Sign in to get your access token.</p>
+        <form id="login-form" class="stack">
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" required />
+          </label>
+          <button class="button ghost" type="submit">Sign in</button>
+          <p id="login-message" class="message"></p>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
