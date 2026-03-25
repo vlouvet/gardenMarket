@@ -7,8 +7,8 @@ class CustomUserManager(UserManager):
         if not email:
             raise ValueError("Email is required")
         email = self.normalize_email(email)
-        extra_fields.setdefault("username", email)
-        return super().create_user(username=email, email=email, password=password, **extra_fields)
+        extra_fields["username"] = email
+        return super().create_user(email=email, password=password, **extra_fields)
 
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
