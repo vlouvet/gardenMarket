@@ -22,5 +22,7 @@ migrate:
 superuser:
 	docker compose exec web python manage.py createsuperuser
 
+init: migrate superuser
+
 test:
 	docker compose exec web pytest

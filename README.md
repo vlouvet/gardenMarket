@@ -139,11 +139,8 @@ make up
 # If you need a local Postgres container as well:
 docker compose --profile localdb up -d
 
-# Run migrations
-make migrate
-
-# Create an admin account
-make superuser
+# First-time setup: generate migrations, apply them, and create an admin user
+make init
 
 # Tail logs
 make logs
@@ -175,8 +172,10 @@ make test
 | `make down` | Stop all containers |
 | `make logs` | Tail container logs |
 | `make bash` | Open a shell in the web container |
-| `make migrate` | Run Django migrations |
+| `make makemigrations` | Generate Django migration files |
+| `make migrate` | Generate and apply Django migrations |
 | `make superuser` | Create a Django superuser |
+| `make init` | First-time setup (migrate + superuser) |
 | `make test` | Run the test suite with pytest |
 
 ## API Documentation
