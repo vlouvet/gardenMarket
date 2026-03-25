@@ -149,7 +149,7 @@ make superuser
 make logs
 ```
 
-The API is available at `http://localhost:8000`. The MinIO console is at `http://localhost:9001`.
+The API is available at `http://localhost:8000`. The MinIO console is at `http://localhost:9002`.
 
 ### Optional: Local PostgreSQL
 
