@@ -529,11 +529,9 @@
 						ProvisioningStyle = Automatic;
 					};
 					A23F2FB0574E62AFE371388E = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					E5BA680D369D2EFEC544972E = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -788,7 +786,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 643KPF758R;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -872,7 +870,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 643KPF758R;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -939,7 +937,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 643KPF758R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GardenMarket/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GardenMarket;
@@ -1008,7 +1006,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 643KPF758R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GardenMarket/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GardenMarket;
