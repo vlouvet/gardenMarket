@@ -160,3 +160,5 @@ STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")
 TAX_RATE = float(os.getenv("TAX_RATE", "0.0"))
+
+SEED_ON_STARTUP = os.getenv("SEED_ON_STARTUP", "0") == "1"
