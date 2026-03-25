@@ -1,6 +1,7 @@
 import csv
 import uuid
 from datetime import date as date_cls
+from decimal import Decimal
 
 from django.conf import settings
 from django.db import transaction
@@ -129,7 +130,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     def payment_intent(self, request, pk=None):
         order = self.get_object()
         amount = sum(item.quantity * item.price_at_purchase for item in order.items.all())
-        tax_amount = amount * settings.TAX_RATE
+        tax_amount = amount * Decimal(str(settings.TAX_RATE))
         amount_cents = int((amount + tax_amount) * 100)
         intent = create_payment_intent(
             amount_cents,

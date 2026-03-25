@@ -28,4 +28,4 @@ def test_create_post_and_photo(api_client, gardener_user):
     response = api_client.post(
         "/api/photos/", data={"post": post_id, "image": image}, format="multipart"
     )
-    assert response.status_code == status.HTTP_201_CREATED
+    assert response.status_code == status.HTTP_201_CREATED, response.data

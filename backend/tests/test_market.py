@@ -39,7 +39,7 @@ def test_order_creation_flow(
         data={"distribution_center": approved_center.id, "pickup_window": "Tomorrow"},
         format="json",
     )
-    assert response.status_code == status.HTTP_201_CREATED
+    assert response.status_code == status.HTTP_201_CREATED, response.data
     order_id = response.data["id"]
 
     response = api_client.post(f"/api/orders/{order_id}/mock_pay/")
