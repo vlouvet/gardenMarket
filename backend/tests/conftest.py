@@ -13,6 +13,14 @@ def disable_geocode_delay(monkeypatch):
     monkeypatch.setattr(tasks.geocode_address_task, "delay", lambda *_args, **_kwargs: None)
 
 
+@pytest.fixture(autouse=True)
+def use_local_file_storage(settings):
+    settings.STORAGES = {
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    }
+
+
 @pytest.fixture
 def api_client():
     return APIClient()
