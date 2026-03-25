@@ -1,0 +1,34 @@
+name: GardenMarket
+options:
+  bundleIdPrefix: com.gardenmarket
+  deploymentTarget:
+    iOS: "17.0"
+    macOS: "14.0"
+  xcodeVersion: "16.0"
+
+targets:
+  GardenMarket:
+    type: application
+    platform: [iOS, macOS]
+    sources:
+      - GardenMarket
+    info:
+      path: GardenMarket/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: GardenMarket
+        NSAppTransportSecurity:
+          NSExceptionDomains:
+            192.168.1.42:
+              NSExceptionAllowsInsecureHTTPLoads: true
+              NSIncludesSubdomains: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gardenmarket.app
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "5.10"
+        GENERATE_INFOPLIST_FILE: true
+        INFOPLIST_KEY_CFBundleDisplayName: GardenMarket
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "Apple Development"
+        DEVELOPMENT_TEAM: ""
