@@ -1,7 +1,8 @@
-import base64
+from io import BytesIO
 
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
+from PIL import Image
 from rest_framework import status
 
 from gardens.models import GardenerProfile
@@ -20,11 +21,10 @@ def test_create_post_and_photo(api_client, gardener_user):
     assert response.status_code == status.HTTP_201_CREATED
     post_id = response.data["id"]
 
-    png_bytes = base64.b64decode(
-        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAA"
-        "AAC0lEQVR42mP8/5+hHgAFgwJ/l+0sWQAAAABJRU5ErkJggg=="
-    )
-    image = SimpleUploadedFile("test.png", png_bytes, content_type="image/png")
+    buf = BytesIO()
+    Image.new("RGB", (1, 1), color="red").save(buf, format="PNG")
+    buf.seek(0)
+    image = SimpleUploadedFile("test.png", buf.read(), content_type="image/png")
     response = api_client.post(
         "/api/photos/", data={"post": post_id, "image": image}, format="multipart"
     )

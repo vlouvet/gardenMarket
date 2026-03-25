@@ -14,6 +14,7 @@ def test_order_creation_flow(
     consumer_profile.lat = approved_center.lat
     consumer_profile.lon = approved_center.lon
     consumer_profile.save(update_fields=["lat", "lon"])
+    consumer_user.refresh_from_db()
 
     gardener_profile = Profile.objects.get(user=gardener_user)
     gardener_profile.lat = approved_center.lat
