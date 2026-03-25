@@ -112,6 +112,7 @@ MinIO credentials in `docker-compose.yml` are derived from `S3_ACCESS_KEY` and `
 |---|---|---|
 | `SENSORS_INGEST_RATE_LIMIT_PER_MIN` | Max sensor readings per device per minute | `60` |
 | `LISTING_LOW_STOCK_THRESHOLD` | Stock count that triggers low-stock warnings | `2` |
+| `SEED_ON_STARTUP` | Set to `1` to auto-seed the database with sample data after migrations | `0` |
 
 #### Minimal `.env` example
 
@@ -175,6 +176,7 @@ make test
 | `make makemigrations` | Generate Django migration files |
 | `make migrate` | Generate and apply Django migrations |
 | `make superuser` | Create a Django superuser |
+| `make seed` | Seed the database with 115 sample listings |
 | `make init` | First-time setup (migrate + superuser) |
 | `make test` | Run the test suite with pytest |
 

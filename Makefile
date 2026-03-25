@@ -22,6 +22,9 @@ migrate:
 superuser:
 	docker compose exec web python manage.py createsuperuser
 
+seed:
+	docker compose exec web python manage.py seed_data
+
 init: migrate superuser
 
 test:
