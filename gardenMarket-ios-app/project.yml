@@ -32,3 +32,35 @@ targets:
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_IDENTITY: "Apple Development"
         DEVELOPMENT_TEAM: ""
+
+  GardenMarketTests_macOS:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - GardenMarketTests
+    dependencies:
+      - target: GardenMarket_macOS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gardenmarket.tests
+        SWIFT_VERSION: "5.10"
+        GENERATE_INFOPLIST_FILE: true
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "Apple Development"
+        DEVELOPMENT_TEAM: ""
+
+  GardenMarketTests_iOS:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - GardenMarketTests
+    dependencies:
+      - target: GardenMarket_iOS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gardenmarket.tests
+        SWIFT_VERSION: "5.10"
+        GENERATE_INFOPLIST_FILE: true
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "Apple Development"
+        DEVELOPMENT_TEAM: ""

@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		001F21AA92D1929F8CE5AA58 /* KeychainServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07645782E20F2B58088A2532 /* KeychainServiceTests.swift */; };
 		037F0D8C09948E110BF5EFF7 /* GardenerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA3FB4A67EC7830DA84D82A /* GardenerProfile.swift */; };
 		05301B28AB9894B54B5428A9 /* Decimal+Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E17A1A485C2CE84CBA1871D /* Decimal+Currency.swift */; };
 		068F55D532013A4B1BAB075B /* ListingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72251E07DF07BFB286167D5E /* ListingService.swift */; };
 		070B807A7C4118F0EF7DFF68 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02E02EA7B640B9300D7E9F9 /* ProfileView.swift */; };
+		078E1EC6FBBB9D2D0C76568E /* APIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7D8931398FF3848810D6AA /* APIEndpointTests.swift */; };
 		079C8E8F5E06B4C275632658 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A853E4C513450135F5DBA /* APIEndpoint.swift */; };
 		0A05D567190D5A3C375047EC /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804DF32B65D7C9588DF44FF8 /* AuthService.swift */; };
 		0AB80FF9C5FB0BB88D59A35B /* ListingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72251E07DF07BFB286167D5E /* ListingService.swift */; };
@@ -43,8 +45,10 @@
 		3A8B8C300A163BCC58BB2D6F /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB4B9CAA5C4C9C4E08DD736 /* RegisterView.swift */; };
 		3A9C6170619CE6DD6F491243 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D23210D4696A625990819AC /* Listing.swift */; };
 		3BF60BC18F9AB7C6EAD9CCD7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA29177E571F0006FB8E54 /* SettingsView.swift */; };
+		3CDE80B119A1B5364B022EE1 /* APIErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C0F85C8819B5EAD74C356 /* APIErrorTests.swift */; };
 		3DAE9730C41CEBCC5128D36A /* ListingsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E866ECE225593E40E93147 /* ListingsGridView.swift */; };
 		3F00D0BE3F4366213C9F82CE /* GrowerDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA40FB1C8A5B6B92C5CCF1D4 /* GrowerDashboardViewModel.swift */; };
+		3F886D6E11DF9644048CA26F /* APIErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C0F85C8819B5EAD74C356 /* APIErrorTests.swift */; };
 		4320C31E13FFFD37FCFAAD71 /* View+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B6ABA01BE44F781583CE97 /* View+ErrorAlert.swift */; };
 		46EC9E4F80A7466F4D22E7DE /* OnboardingChecklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24C00E9A5EED9EF95C9003C /* OnboardingChecklist.swift */; };
 		4990C2B842158C4D42FF7114 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB5B2A9D6A6B0E78804ED0 /* ProfileService.swift */; };
@@ -56,6 +60,7 @@
 		5B9DEA8C6F7FE5BC2A9D209C /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A853E4C513450135F5DBA /* APIEndpoint.swift */; };
 		5BF93829E94213BD0423D138 /* OnboardingStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C6AF41CA03A52AC92465DE /* OnboardingStatus.swift */; };
 		5C5CFFC488C4D385B022B3CF /* ListingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236D687E5E2258B1BFD9D9D /* ListingsViewModel.swift */; };
+		5C8683054826327496C1D0A2 /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B11E0A716EB962FB6CA8D /* ExtensionTests.swift */; };
 		61D5C493B27CAF6E7E0B9F17 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5648CD49478D21575430F4C8 /* ContentView.swift */; };
 		646BE9BF68461A7FA176093E /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3906D6E2A36720332DD3B5 /* MainTabView.swift */; };
 		6B6710F561A38D4035D2B93D /* CreateListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28558B002C95D36A63DFBEAD /* CreateListingView.swift */; };
@@ -64,6 +69,7 @@
 		6EE3DD4840A95B032C15C089 /* GardenerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA3FB4A67EC7830DA84D82A /* GardenerProfile.swift */; };
 		70AAD7EE069A95B09CE6430A /* ListingsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E866ECE225593E40E93147 /* ListingsGridView.swift */; };
 		7480DD1E371089C5619B027A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7402991663FEF2E22D6585D /* LoginView.swift */; };
+		77872485FC4D397A3AC8B9F1 /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097281C7774E1F067C79C67C /* ViewModelTests.swift */; };
 		7B7CAC41CC914CD7578ABEE5 /* GrowerListingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD41A1CB22A23A1CDF21DAEA /* GrowerListingsView.swift */; };
 		8175D571FB627065C4EECE66 /* GrowerOrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928E457115AFEEF05C0D1EC /* GrowerOrdersView.swift */; };
 		85256BC4B7559DC078A6BA0E /* View+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B6ABA01BE44F781583CE97 /* View+ErrorAlert.swift */; };
@@ -71,8 +77,10 @@
 		8A8AAFE457562A2C811FD7FD /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8709EDA77972E5D79F41D9 /* Color+Theme.swift */; };
 		8FBD2DA2E0A3D0767897010D /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362953BCC8EADF91DD1EC740 /* Cart.swift */; };
 		916F23365567BAA75D9A38C2 /* GrowerDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA40FB1C8A5B6B92C5CCF1D4 /* GrowerDashboardViewModel.swift */; };
+		91CC4A3FA6BF971FBD60322A /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B29ED57D56411B3EAF437D /* ModelTests.swift */; };
 		91D613679552FFBF3548D2AF /* PlantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D65BD347BF22476BC0752F /* PlantService.swift */; };
 		946F3E1443307767856331C1 /* GrowerOrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7928E457115AFEEF05C0D1EC /* GrowerOrdersView.swift */; };
+		94FE144C30FF6AA23D7C1CF4 /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097281C7774E1F067C79C67C /* ViewModelTests.swift */; };
 		968CB9BB41FA394A5024D5D2 /* EditListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF94AE54FC1E4A6F9FC226D /* EditListingView.swift */; };
 		97421017020BE295C3430932 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ED0A98936A15A1001F7A12 /* Order.swift */; };
 		98FBCBAE466F2E68436DAF65 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A936B310120405F8F0300247 /* ProfileViewModel.swift */; };
@@ -80,8 +88,10 @@
 		9E68AF1C9ACD00F993CF1ACE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA29177E571F0006FB8E54 /* SettingsView.swift */; };
 		A12F755DB378495EB45D502F /* ListingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33C3FB977C302160E7204DF /* ListingCardView.swift */; };
 		A130F9FEF7339C2D3AADE646 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475669F48B99F1D8F3F903C /* CartView.swift */; };
+		A62780042F08B4E2BBDF92B1 /* APIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7D8931398FF3848810D6AA /* APIEndpointTests.swift */; };
 		A6FF594D07BD75CDAFE1C982 /* CreatePlantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2C90EF784C7DDFE3D2586E /* CreatePlantView.swift */; };
 		A89F015EAD55BF0550C385A2 /* GardenerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C45470C0D0AF67B8EBEE5F /* GardenerService.swift */; };
+		A9695A249F937C169E4B47C1 /* KeychainServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07645782E20F2B58088A2532 /* KeychainServiceTests.swift */; };
 		AA7A6F1672C76D25E2B332C4 /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C532AA98BA654AC57942B97 /* OrderViewModel.swift */; };
 		ABD35E35DE1E57FC34EFE983 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDB9CCFCC17E296ECE255DD /* CartViewModel.swift */; };
 		ABFDEAB7B2C66112167399C2 /* OrdersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6700400C419B929F1C80DB /* OrdersListView.swift */; };
@@ -103,6 +113,8 @@
 		D003E390AE371CE4AF57FC0E /* PlantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1638D2207CB948108B96AF0E /* PlantsListView.swift */; };
 		D0C0BEE205849948AE399F3D /* CartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF830B2746B6CDDF3583E6BA /* CartService.swift */; };
 		D3F459B45E4E4B0A3673485A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49989F8609E7E608259389 /* User.swift */; };
+		D3F5CA6BBA9E08B05A73C7D3 /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B11E0A716EB962FB6CA8D /* ExtensionTests.swift */; };
+		DACAD72CC58838C5EA8738ED /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B29ED57D56411B3EAF437D /* ModelTests.swift */; };
 		E1D30863A8BAC49B18C87D29 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7402991663FEF2E22D6585D /* LoginView.swift */; };
 		E247943DE57D6E385B61C913 /* ListingFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A6170E239C76ACABCBDF92 /* ListingFilterBar.swift */; };
 		E3072061ED2E51B6372904C4 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AFAC9F33EF6C83D9ACD857 /* APIClient.swift */; };
@@ -117,8 +129,28 @@
 		FF810F6B7ABF1F889C9605B4 /* GrowerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DCE27352DD28D815E16EDA /* GrowerTabView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		05886EDC026F2EC351759665 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A65FB8A4CFD9816A7CEEF843 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9065B6E7604AF3E413C6D772;
+			remoteInfo = GardenMarket_iOS;
+		};
+		DFE2767119968230495934EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A65FB8A4CFD9816A7CEEF843 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5BA680D369D2EFEC544972E;
+			remoteInfo = GardenMarket_macOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		03646B09C7E08A47CA4A598F /* UpgradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeView.swift; sourceTree = "<group>"; };
+		07645782E20F2B58088A2532 /* KeychainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceTests.swift; sourceTree = "<group>"; };
+		097281C7774E1F067C79C67C /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTests.swift; sourceTree = "<group>"; };
+		0F5B11E0A716EB962FB6CA8D /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
 		1131BDE6DD3E477E7F97EF48 /* OrderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
 		1236D687E5E2258B1BFD9D9D /* ListingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsViewModel.swift; sourceTree = "<group>"; };
 		1638D2207CB948108B96AF0E /* PlantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsListView.swift; sourceTree = "<group>"; };
@@ -132,6 +164,7 @@
 		362953BCC8EADF91DD1EC740 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		3769A420FC99A52DBEAFA5BF /* PlantProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantProfile.swift; sourceTree = "<group>"; };
 		3832756DF5F8D18EC8C844B8 /* CenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterService.swift; sourceTree = "<group>"; };
+		41869E02F3DB10C6F7B313E2 /* GardenMarketTests_macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GardenMarketTests_macOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41A49B3307689136D6794F92 /* GardenMarketApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenMarketApp.swift; sourceTree = "<group>"; };
 		456A853E4C513450135F5DBA /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		45DCE27352DD28D815E16EDA /* GrowerTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowerTabView.swift; sourceTree = "<group>"; };
@@ -141,6 +174,7 @@
 		6CDB9CCFCC17E296ECE255DD /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		70CB8F12229C772FAEB8865C /* GardenMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GardenMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72251E07DF07BFB286167D5E /* ListingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingService.swift; sourceTree = "<group>"; };
+		72F0F347837EFB725B4D1F58 /* GardenMarketTests_iOS.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GardenMarketTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7928E457115AFEEF05C0D1EC /* GrowerOrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowerOrdersView.swift; sourceTree = "<group>"; };
 		7A0099F59D4E456CA18AFE18 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		7BEA29177E571F0006FB8E54 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -149,6 +183,7 @@
 		8E17A1A485C2CE84CBA1871D /* Decimal+Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Currency.swift"; sourceTree = "<group>"; };
 		93C45470C0D0AF67B8EBEE5F /* GardenerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenerService.swift; sourceTree = "<group>"; };
 		94099738DDBE975447880F90 /* GardenMarket.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GardenMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3C0F85C8819B5EAD74C356 /* APIErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorTests.swift; sourceTree = "<group>"; };
 		9B6700400C419B929F1C80DB /* OrdersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersListView.swift; sourceTree = "<group>"; };
 		A33C3FB977C302160E7204DF /* ListingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingCardView.swift; sourceTree = "<group>"; };
 		A4F1C7E1A64B87DD01C346C1 /* TokenRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefresher.swift; sourceTree = "<group>"; };
@@ -165,7 +200,9 @@
 		C5C6AF41CA03A52AC92465DE /* OnboardingStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStatus.swift; sourceTree = "<group>"; };
 		C6E866ECE225593E40E93147 /* ListingsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsGridView.swift; sourceTree = "<group>"; };
 		C7402991663FEF2E22D6585D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		CD7D8931398FF3848810D6AA /* APIEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointTests.swift; sourceTree = "<group>"; };
 		D02E02EA7B640B9300D7E9F9 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		D2B29ED57D56411B3EAF437D /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		DCA8A75F2FF17278B37B23A4 /* OrderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailView.swift; sourceTree = "<group>"; };
 		E00808934F0728D54D60F10C /* CheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
 		E3B6ABA01BE44F781583CE97 /* View+ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ErrorAlert.swift"; sourceTree = "<group>"; };
@@ -205,6 +242,19 @@
 				E3B6ABA01BE44F781583CE97 /* View+ErrorAlert.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1B871D491B9B4D6083E0C712 /* GardenMarketTests */ = {
+			isa = PBXGroup;
+			children = (
+				CD7D8931398FF3848810D6AA /* APIEndpointTests.swift */,
+				9A3C0F85C8819B5EAD74C356 /* APIErrorTests.swift */,
+				0F5B11E0A716EB962FB6CA8D /* ExtensionTests.swift */,
+				07645782E20F2B58088A2532 /* KeychainServiceTests.swift */,
+				D2B29ED57D56411B3EAF437D /* ModelTests.swift */,
+				097281C7774E1F067C79C67C /* ViewModelTests.swift */,
+			);
+			path = GardenMarketTests;
 			sourceTree = "<group>";
 		};
 		24498154F1ECF7E0DABD2AF2 /* ViewModels */ = {
@@ -300,6 +350,8 @@
 			children = (
 				94099738DDBE975447880F90 /* GardenMarket.app */,
 				70CB8F12229C772FAEB8865C /* GardenMarket.app */,
+				72F0F347837EFB725B4D1F58 /* GardenMarketTests_iOS.xctest */,
+				41869E02F3DB10C6F7B313E2 /* GardenMarketTests_macOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -328,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				24A935BAB3FA1D13877AFCBA /* GardenMarket */,
+				1B871D491B9B4D6083E0C712 /* GardenMarketTests */,
 				7AC65AC0A8E9D308F7137296 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -388,6 +441,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1624A0B367246B86BD537BB1 /* GardenMarketTests_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44D55A5F7F1DB40D0BEE61B5 /* Build configuration list for PBXNativeTarget "GardenMarketTests_iOS" */;
+			buildPhases = (
+				850A6BB9C272189715BB5AC9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8A345A196B9A7A3974AEA75D /* PBXTargetDependency */,
+			);
+			name = GardenMarketTests_iOS;
+			packageProductDependencies = (
+			);
+			productName = GardenMarketTests_iOS;
+			productReference = 72F0F347837EFB725B4D1F58 /* GardenMarketTests_iOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9065B6E7604AF3E413C6D772 /* GardenMarket_iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7CE1DF021B5B324093DDAA3 /* Build configuration list for PBXNativeTarget "GardenMarket_iOS" */;
@@ -404,6 +475,24 @@
 			productName = GardenMarket_iOS;
 			productReference = 94099738DDBE975447880F90 /* GardenMarket.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A23F2FB0574E62AFE371388E /* GardenMarketTests_macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE495276FDD035645C264D14 /* Build configuration list for PBXNativeTarget "GardenMarketTests_macOS" */;
+			buildPhases = (
+				1E52B5C1DBC2F044F75EF739 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B5CC8FC74408150A1DF79E6C /* PBXTargetDependency */,
+			);
+			name = GardenMarketTests_macOS;
+			packageProductDependencies = (
+			);
+			productName = GardenMarketTests_macOS;
+			productReference = 41869E02F3DB10C6F7B313E2 /* GardenMarketTests_macOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E5BA680D369D2EFEC544972E /* GardenMarket_macOS */ = {
 			isa = PBXNativeTarget;
@@ -431,11 +520,20 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					1624A0B367246B86BD537BB1 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
 					9065B6E7604AF3E413C6D772 = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
+					A23F2FB0574E62AFE371388E = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
 					E5BA680D369D2EFEC544972E = {
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -454,6 +552,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				1624A0B367246B86BD537BB1 /* GardenMarketTests_iOS */,
+				A23F2FB0574E62AFE371388E /* GardenMarketTests_macOS */,
 				9065B6E7604AF3E413C6D772 /* GardenMarket_iOS */,
 				E5BA680D369D2EFEC544972E /* GardenMarket_macOS */,
 			);
@@ -461,6 +561,19 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1E52B5C1DBC2F044F75EF739 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A62780042F08B4E2BBDF92B1 /* APIEndpointTests.swift in Sources */,
+				3CDE80B119A1B5364B022EE1 /* APIErrorTests.swift in Sources */,
+				5C8683054826327496C1D0A2 /* ExtensionTests.swift in Sources */,
+				A9695A249F937C169E4B47C1 /* KeychainServiceTests.swift in Sources */,
+				91CC4A3FA6BF971FBD60322A /* ModelTests.swift in Sources */,
+				94FE144C30FF6AA23D7C1CF4 /* ViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		487CDD1D5EB2AC9CA8DE0204 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -583,7 +696,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		850A6BB9C272189715BB5AC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				078E1EC6FBBB9D2D0C76568E /* APIEndpointTests.swift in Sources */,
+				3F886D6E11DF9644048CA26F /* APIErrorTests.swift in Sources */,
+				D3F5CA6BBA9E08B05A73C7D3 /* ExtensionTests.swift in Sources */,
+				001F21AA92D1929F8CE5AA58 /* KeychainServiceTests.swift in Sources */,
+				DACAD72CC58838C5EA8738ED /* ModelTests.swift in Sources */,
+				77872485FC4D397A3AC8B9F1 /* ViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8A345A196B9A7A3974AEA75D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9065B6E7604AF3E413C6D772 /* GardenMarket_iOS */;
+			targetProxy = 05886EDC026F2EC351759665 /* PBXContainerItemProxy */;
+		};
+		B5CC8FC74408150A1DF79E6C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5BA680D369D2EFEC544972E /* GardenMarket_macOS */;
+			targetProxy = DFE2767119968230495934EF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		14D60213AECAA431A6D980AB /* Release */ = {
@@ -639,6 +778,27 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		20CF4151373DA95E8C66B242 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gardenmarket.tests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.10;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GardenMarket.app/Contents/MacOS/GardenMarket";
 			};
 			name = Release;
 		};
@@ -705,6 +865,48 @@
 			};
 			name = Debug;
 		};
+		4EA002EC2631A3A1DA1B7DD2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gardenmarket.tests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.10;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GardenMarket.app/Contents/MacOS/GardenMarket";
+			};
+			name = Debug;
+		};
+		63B225EA3A9811E87335ABD8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gardenmarket.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GardenMarket.app/GardenMarket";
+			};
+			name = Release;
+		};
 		6EAE5241012B25AEE4848F9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -734,11 +936,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 643KPF758R;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GardenMarket/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GardenMarket;
@@ -778,16 +979,36 @@
 			};
 			name = Release;
 		};
+		A45DD660BF075FB280D5F7CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gardenmarket.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GardenMarket.app/GardenMarket";
+			};
+			name = Debug;
+		};
 		F15F53E8451F252BAE57408F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 643KPF758R;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GardenMarket/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GardenMarket;
@@ -815,11 +1036,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		44D55A5F7F1DB40D0BEE61B5 /* Build configuration list for PBXNativeTarget "GardenMarketTests_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45DD660BF075FB280D5F7CB /* Debug */,
+				63B225EA3A9811E87335ABD8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		ADD36B4B5128669E984DA3E8 /* Build configuration list for PBXNativeTarget "GardenMarket_macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82D8BD4D283CC07165150DA2 /* Debug */,
 				F15F53E8451F252BAE57408F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BE495276FDD035645C264D14 /* Build configuration list for PBXNativeTarget "GardenMarketTests_macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EA002EC2631A3A1DA1B7DD2 /* Debug */,
+				20CF4151373DA95E8C66B242 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -13,5 +13,10 @@ let package = Package(
             path: "GardenMarket",
             exclude: ["Resources/Info.plist"]
         ),
+        .testTarget(
+            name: "GardenMarketTests",
+            dependencies: ["GardenMarket"],
+            path: "GardenMarketTests"
+        ),
     ]
 )
