@@ -396,3 +396,197 @@ final class OnboardingStatusTests: XCTestCase {
         XCTAssertFalse(status.allComplete)
     }
 }
+
+// MARK: - Additional Model Tests
+
+final class DistributionCenterAdditionalTests: XCTestCase {
+    func testFullAddressIgnoresLine2() {
+        let center = DistributionCenter(
+            id: 1, name: "Hub", addressLine1: "100 Main St",
+            addressLine2: "Suite 200", city: "Denver", state: "CO",
+            postalCode: "80202", country: "US", lat: nil, lon: nil,
+            status: nil, capacityPerDay: nil, pickupWindows: nil,
+            remainingCapacity: nil
+        )
+        XCTAssertEqual(center.fullAddress, "100 Main St, Denver, CO, 80202")
+        XCTAssertFalse(center.fullAddress.contains("Suite 200"))
+    }
+
+    func testDecodeFromSnakeCaseJSON() throws {
+        let json = """
+        {
+            "id": 5, "name": "North Hub",
+            "address_line1": "200 Oak Ave", "address_line2": "Bldg B",
+            "city": "Boulder", "state": "CO", "postal_code": "80301",
+            "country": "US", "lat": 40.01, "lon": -105.27,
+            "status": "ACTIVE", "capacity_per_day": 100,
+            "pickup_windows": ["Morning", "Afternoon"],
+            "remaining_capacity": 42
+        }
+        """.data(using: .utf8)!
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let center = try decoder.decode(DistributionCenter.self, from: json)
+        XCTAssertEqual(center.id, 5)
+        XCTAssertEqual(center.name, "North Hub")
+        XCTAssertEqual(center.addressLine2, "Bldg B")
+        XCTAssertEqual(center.lat, 40.01)
+        XCTAssertEqual(center.capacityPerDay, 100)
+        XCTAssertEqual(center.pickupWindows, ["Morning", "Afternoon"])
+        XCTAssertEqual(center.remainingCapacity, 42)
+    }
+}
+
+final class ListingAdditionalTests: XCTestCase {
+    func testDecodeAllOptionalFields() throws {
+        let json = """
+        {
+            "id": 10, "plant": 3, "type": "PRODUCE", "unit": "lb",
+            "price": "5.50", "quantity_available": 25, "status": "ACTIVE",
+            "is_hidden": true, "pickup_window": "Morning",
+            "pickup_days": ["MONDAY", "FRIDAY"],
+            "in_stock": true, "distance_miles": 3.2,
+            "grown_within_miles": 10, "grower_verified": true, "grower_rating": 4.8
+        }
+        """.data(using: .utf8)!
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let listing = try decoder.decode(Listing.self, from: json)
+        XCTAssertEqual(listing.isHidden, true)
+        XCTAssertEqual(listing.pickupWindow, "Morning")
+        XCTAssertEqual(listing.pickupDays, ["MONDAY", "FRIDAY"])
+        XCTAssertEqual(listing.distanceMiles, 3.2)
+        XCTAssertEqual(listing.grownWithinMiles, 10)
+        XCTAssertEqual(listing.growerVerified, true)
+        XCTAssertEqual(listing.growerRating, 4.8)
+    }
+}
+
+final class FlexDecimalAdditionalTests: XCTestCase {
+    func testZeroRoundtrip() throws {
+        let fd = FlexDecimal(Decimal.zero)
+        let data = try JSONEncoder().encode(fd)
+        let decoded = try JSONDecoder().decode(FlexDecimal.self, from: data)
+        XCTAssertEqual(decoded.value, Decimal.zero)
+    }
+
+    func testNegativeRoundtrip() throws {
+        let fd = FlexDecimal(Decimal(string: "-15.75")!)
+        let data = try JSONEncoder().encode(fd)
+        let decoded = try JSONDecoder().decode(FlexDecimal.self, from: data)
+        XCTAssertEqual(decoded.value, Decimal(string: "-15.75"))
+    }
+}
+
+final class OrderAdditionalTests: XCTestCase {
+    func testDecodeFullJSON() throws {
+        let json = """
+        {
+            "id": 42, "status": "SCHEDULED",
+            "distribution_center": 3, "pickup_window": "Afternoon",
+            "pickup_date": "2026-04-15",
+            "mock_payment_reference": "mock_abc123",
+            "stripe_payment_intent_id": null,
+            "payment_status": "paid",
+            "checkin_code": "XYZ789",
+            "checked_in_at": null, "created_at": null,
+            "items": [
+                {"id": 1, "listing": 5, "quantity": 2, "price_at_purchase": "4.99"},
+                {"id": 2, "listing": 8, "quantity": 1, "price_at_purchase": "12.00"}
+            ]
+        }
+        """.data(using: .utf8)!
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let order = try decoder.decode(Order.self, from: json)
+        XCTAssertEqual(order.id, 42)
+        XCTAssertEqual(order.displayStatus, "Scheduled")
+        XCTAssertTrue(order.isPaid)
+        XCTAssertEqual(order.distributionCenter, 3)
+        XCTAssertEqual(order.mockPaymentReference, "mock_abc123")
+        XCTAssertEqual(order.checkinCode, "XYZ789")
+        XCTAssertEqual(order.items?.count, 2)
+        XCTAssertEqual(order.items?[0].priceAtPurchase.value, Decimal(string: "4.99"))
+        XCTAssertEqual(order.items?[1].quantity, 1)
+    }
+}
+
+final class PlantProfileAdditionalTests: XCTestCase {
+    func testDecodeFromSnakeCaseJSON() throws {
+        let json = """
+        {
+            "id": 7, "gardener": 2, "name": "Cherry Tomato",
+            "species": "S. lycopersicum", "description": "Sweet cherry variety",
+            "tags": "vegetable,summer", "grow_method": "HYDROPONIC"
+        }
+        """.data(using: .utf8)!
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let plant = try decoder.decode(PlantProfile.self, from: json)
+        XCTAssertEqual(plant.id, 7)
+        XCTAssertEqual(plant.name, "Cherry Tomato")
+        XCTAssertEqual(plant.species, "S. lycopersicum")
+        XCTAssertEqual(plant.tags, "vegetable,summer")
+        XCTAssertEqual(plant.displayGrowMethod, "Hydroponic")
+    }
+}
+
+final class CreateListingRequestTests: XCTestCase {
+    func testEncode() throws {
+        let req = CreateListingRequest(
+            plant: 1, type: "PRODUCE", unit: "lb", price: "5.00",
+            quantityAvailable: 10, pickupWindow: "Morning", pickupDays: ["MONDAY"]
+        )
+        let data = try JSONEncoder().encode(req)
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(dict?["plant"] as? Int, 1)
+        XCTAssertEqual(dict?["type"] as? String, "PRODUCE")
+        XCTAssertEqual(dict?["price"] as? String, "5.00")
+        XCTAssertEqual(dict?["quantityAvailable"] as? Int, 10)
+        XCTAssertEqual(dict?["pickupDays"] as? [String], ["MONDAY"])
+    }
+}
+
+final class UpdateListingRequestTests: XCTestCase {
+    func testEncodePartial() throws {
+        var req = UpdateListingRequest()
+        req.price = "9.99"
+        let data = try JSONEncoder().encode(req)
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(dict?["price"] as? String, "9.99")
+    }
+
+    func testEncodeEmpty() throws {
+        let req = UpdateListingRequest()
+        let data = try JSONEncoder().encode(req)
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertNotNil(dict)
+    }
+}
+
+final class ListingFilterAdditionalTests: XCTestCase {
+    func testPickupDayFilter() {
+        let filter = ListingFilter(pickupDay: "MONDAY")
+        let items = filter.queryItems
+        XCTAssertEqual(items.count, 1)
+        XCTAssertEqual(items.first?.name, "pickup_day")
+        XCTAssertEqual(items.first?.value, "MONDAY")
+    }
+
+    func testAllFieldsPopulated() {
+        let filter = ListingFilter(
+            type: "PRODUCE", growMethod: "ORGANIC", pickupDay: "FRIDAY",
+            inStock: true, lat: 39.74, lon: -104.99, address: "Denver"
+        )
+        let items = filter.queryItems
+        XCTAssertEqual(items.count, 7)
+        let names = Set(items.map(\.name))
+        XCTAssertTrue(names.contains("type"))
+        XCTAssertTrue(names.contains("grow_method"))
+        XCTAssertTrue(names.contains("pickup_day"))
+        XCTAssertTrue(names.contains("in_stock"))
+        XCTAssertTrue(names.contains("lat"))
+        XCTAssertTrue(names.contains("lon"))
+        XCTAssertTrue(names.contains("address"))
+    }
+}

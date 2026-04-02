@@ -211,6 +211,109 @@ final class APIEndpointTests: XCTestCase {
         let dict = try JSONSerialization.jsonObject(with: data) as? [String: String]
         XCTAssertNil(dict?["pickup_date"])
     }
+
+    // MARK: - Additional Body Tests
+
+    func testRegisterBody() throws {
+        let ep = APIEndpoint.register(email: "new@test.com", password: "pass123", role: "GARDENER")
+        let body = ep.body
+        XCTAssertNotNil(body)
+        let data = try JSONEncoder().encode(AnyEncodableWrapper(body!))
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertEqual(dict?["email"], "new@test.com")
+        XCTAssertEqual(dict?["password"], "pass123")
+        XCTAssertEqual(dict?["role"], "GARDENER")
+    }
+
+    func testRefreshTokenBody() throws {
+        let ep = APIEndpoint.refreshToken(token: "my-refresh-token")
+        let body = ep.body
+        XCTAssertNotNil(body)
+        let data = try JSONEncoder().encode(AnyEncodableWrapper(body!))
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertEqual(dict?["refresh"], "my-refresh-token")
+    }
+
+    func testUpdateProfileBody() throws {
+        let update = ProfileUpdate(
+            addressLine1: "123 Main St", addressLine2: "Apt 4",
+            city: "Denver", state: "CO", postalCode: "80202", country: "US"
+        )
+        let ep = APIEndpoint.updateProfile(update)
+        let body = ep.body
+        XCTAssertNotNil(body)
+        let data = try JSONEncoder().encode(AnyEncodableWrapper(body!))
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(dict?["addressLine1"] as? String, "123 Main St")
+        XCTAssertEqual(dict?["addressLine2"] as? String, "Apt 4")
+        XCTAssertEqual(dict?["city"] as? String, "Denver")
+        XCTAssertEqual(dict?["state"] as? String, "CO")
+        XCTAssertEqual(dict?["postalCode"] as? String, "80202")
+        XCTAssertEqual(dict?["country"] as? String, "US")
+    }
+
+    func testCreateListingBody() throws {
+        let req = CreateListingRequest(
+            plant: 3, type: "SEEDS", unit: "each", price: "4.99",
+            quantityAvailable: 50, pickupWindow: "Morning", pickupDays: ["MONDAY", "WEDNESDAY"]
+        )
+        let ep = APIEndpoint.createListing(req)
+        let body = ep.body
+        XCTAssertNotNil(body)
+        let data = try JSONEncoder().encode(AnyEncodableWrapper(body!))
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(dict?["plant"] as? Int, 3)
+        XCTAssertEqual(dict?["type"] as? String, "SEEDS")
+        XCTAssertEqual(dict?["unit"] as? String, "each")
+        XCTAssertEqual(dict?["price"] as? String, "4.99")
+        XCTAssertEqual(dict?["quantityAvailable"] as? Int, 50)
+        XCTAssertEqual(dict?["pickupWindow"] as? String, "Morning")
+        XCTAssertEqual(dict?["pickupDays"] as? [String], ["MONDAY", "WEDNESDAY"])
+    }
+
+    func testUpdateListingBody() throws {
+        var req = UpdateListingRequest()
+        req.price = "6.99"
+        req.status = "PAUSED"
+        let ep = APIEndpoint.updateListing(id: 7, req)
+        let body = ep.body
+        XCTAssertNotNil(body)
+        let data = try JSONEncoder().encode(AnyEncodableWrapper(body!))
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(dict?["price"] as? String, "6.99")
+        XCTAssertEqual(dict?["status"] as? String, "PAUSED")
+    }
+
+    func testCreatePlantBody() throws {
+        let req = CreatePlantRequest(
+            gardener: 2, name: "Basil", species: "O. basilicum",
+            description: "Sweet basil", tags: "herb,italian", growMethod: "SOIL"
+        )
+        let ep = APIEndpoint.createPlant(req)
+        let body = ep.body
+        XCTAssertNotNil(body)
+        let data = try JSONEncoder().encode(AnyEncodableWrapper(body!))
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(dict?["gardener"] as? Int, 2)
+        XCTAssertEqual(dict?["name"] as? String, "Basil")
+        XCTAssertEqual(dict?["species"] as? String, "O. basilicum")
+        XCTAssertEqual(dict?["growMethod"] as? String, "SOIL")
+    }
+
+    func testAddToCartBody() throws {
+        let ep = APIEndpoint.addToCart(listingId: 42, quantity: 3)
+        let body = ep.body
+        XCTAssertNotNil(body)
+        let data = try JSONEncoder().encode(AnyEncodableWrapper(body!))
+        let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        XCTAssertEqual(dict?["listing"] as? Int, 42)
+        XCTAssertEqual(dict?["quantity"] as? Int, 3)
+    }
+
+    func testDeleteAndMockPayHaveNoBody() {
+        XCTAssertNil(APIEndpoint.removeCartItem(id: 1).body)
+        XCTAssertNil(APIEndpoint.mockPay(orderId: 1).body)
+    }
 }
 
 // Helper to encode `any Encodable` in tests

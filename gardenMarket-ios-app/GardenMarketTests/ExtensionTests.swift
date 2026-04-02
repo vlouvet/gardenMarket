@@ -1,4 +1,5 @@
 import XCTest
+import SwiftUI
 @testable import GardenMarket
 
 final class DecimalCurrencyTests: XCTestCase {
@@ -31,5 +32,22 @@ final class DecimalCurrencyTests: XCTestCase {
         let value = Decimal(10)
         let formatted = value.currencyFormatted
         XCTAssertTrue(formatted.contains("10"))
+    }
+}
+
+final class ColorThemeTests: XCTestCase {
+    func testGardenAccentColorExists() {
+        let color = Color.gardenAccent
+        XCTAssertNotNil(color)
+    }
+
+    func testGardenSecondaryColorExists() {
+        let color = Color.gardenSecondary
+        XCTAssertNotNil(color)
+    }
+
+    func testGardenBackgroundColorExists() {
+        let color = Color.gardenBackground
+        XCTAssertNotNil(color)
     }
 }

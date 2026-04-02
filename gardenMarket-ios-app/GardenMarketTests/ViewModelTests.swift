@@ -134,3 +134,37 @@ final class GrowerDashboardViewModelTests: XCTestCase {
         XCTAssertNil(vm.error)
     }
 }
+
+// MARK: - Additional ViewModel Tests
+
+final class CartViewModelAdditionalTests: XCTestCase {
+    func testItemCountWithItems() {
+        let vm = CartViewModel()
+        let cart = Cart(id: 1, items: [
+            CartItem(id: 1, listing: 5, quantity: 2),
+            CartItem(id: 2, listing: 6, quantity: 1),
+            CartItem(id: 3, listing: 7, quantity: 4),
+        ])
+        vm.cart = cart
+        XCTAssertEqual(vm.itemCount, 3)
+    }
+
+    func testItemCountAfterClear() {
+        let vm = CartViewModel()
+        vm.cart = Cart(id: 1, items: [CartItem(id: 1, listing: 5, quantity: 2)])
+        XCTAssertEqual(vm.itemCount, 1)
+        vm.cart = nil
+        XCTAssertEqual(vm.itemCount, 0)
+    }
+}
+
+final class ListingsViewModelAdditionalTests: XCTestCase {
+    func testFilterQueryItemsReflectMultipleFields() {
+        let vm = ListingsViewModel()
+        vm.filter.type = "SEEDS"
+        vm.filter.growMethod = "ORGANIC"
+        vm.filter.inStock = true
+        vm.filter.address = "Boulder"
+        XCTAssertEqual(vm.filter.queryItems.count, 4)
+    }
+}

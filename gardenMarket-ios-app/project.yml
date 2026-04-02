@@ -64,3 +64,19 @@ targets:
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_IDENTITY: "Apple Development"
         DEVELOPMENT_TEAM: ""
+
+schemes:
+  GardenMarket_macOS:
+    build:
+      targets:
+        GardenMarket_macOS: all
+    test:
+      targets:
+        - GardenMarketTests_macOS
+  GardenMarket_iOS:
+    build:
+      targets:
+        GardenMarket_iOS: all
+    test:
+      targets:
+        - GardenMarketTests_iOS
