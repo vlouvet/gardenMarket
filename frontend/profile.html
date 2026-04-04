@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Grow With Us | GardenMarket</title>
+    <title>Profile | GardenMarket</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,38 +13,35 @@
     <link rel="stylesheet" href="styles.css" />
     <script defer data-domain="gardenmarket.local" src="https://plausible.io/js/script.js"></script>
     <script defer src="app.js"></script>
-    <script defer src="grow.js"></script>
+    <script defer src="profile.js"></script>
   </head>
-  <body data-page="grow">
+  <body data-page="profile">
     <header class="site-header">
       <div class="logo">GardenMarket</div>
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="gallery.html">Produce Gallery</a>
-        <a href="register.html">Register</a>
-      </nav>
+      <nav class="nav-links"></nav>
     </header>
 
-    <main class="grow">
+    <main class="split">
       <section class="panel">
-        <h1>Grow with us</h1>
-        <p>
-          Buyers can unlock grower tools after completing at least one purchase. This helps
-          keep the marketplace balanced and trustworthy.
-        </p>
-        <ol class="steps">
-          <li>Complete a purchase as a buyer.</li>
-          <li>Request grower access below.</li>
-          <li>Start listing seeds, clones, and produce.</li>
-        </ol>
-        <button class="button primary" id="upgrade-button">Request grower access</button>
-        <p class="message" id="upgrade-message"></p>
+        <h1>Your Profile</h1>
+        <p>Update your address so we can show nearby listings and centers.</p>
+        <form id="profile-form" class="stack">
+          <label>Address line 1 <input type="text" name="address_line1" /></label>
+          <label>Address line 2 <input type="text" name="address_line2" /></label>
+          <label>City <input type="text" name="city" /></label>
+          <label>State <input type="text" name="state" /></label>
+          <label>Postal code <input type="text" name="postal_code" /></label>
+          <label>Country <input type="text" name="country" /></label>
+          <button class="button primary" type="submit">Save profile</button>
+          <p id="profile-message" class="message"></p>
+        </form>
       </section>
 
       <section class="panel muted">
-        <h2>Need a token?</h2>
-        <p>Sign in on the register page to store your access token.</p>
-        <a class="button ghost" href="register.html">Go to register</a>
+        <h2>Account</h2>
+        <p>Email: <strong id="account-email">--</strong></p>
+        <p>Role: <strong id="account-role">--</strong></p>
+        <button class="button ghost" id="logout-button">Sign out</button>
       </section>
     </main>
 
