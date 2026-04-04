@@ -14,9 +14,12 @@ const initDashboard = async () => {
   const saveBtn = document.getElementById("save-listings-btn");
   const saveMsg = document.getElementById("listings-save-message");
 
+  if (status) showLoading(status);
+
   // Check role
   try {
     const me = await request("/api/accounts/me/");
+    if (status) hideLoading(status);
     if (me.role !== "GROWER") {
       if (status) status.textContent = "You need grower access. Visit Grow With Us to upgrade.";
       document.getElementById("grower-profile-section")?.remove();
@@ -24,11 +27,15 @@ const initDashboard = async () => {
       return;
     }
   } catch (error) {
-    if (status) status.textContent = error.message;
+    if (status) {
+      hideLoading(status);
+      showError(status, error.message);
+    }
     return;
   }
 
   // Load grower data in parallel
+  if (listingsTable) showLoading(listingsTable);
   try {
     const [gardeners, plants, listings, orders] = await Promise.all([
       request("/api/gardeners/").catch(() => []),
@@ -107,14 +114,27 @@ const initDashboard = async () => {
       }
     }
   } catch (error) {
-    if (status) status.textContent = error.message;
+    if (listingsTable) {
+      listingsTable.innerHTML = "";
+      showError(listingsTable, `Could not load dashboard data: ${error.message}`);
+    }
   }
 
   // Create listing
   if (createForm) {
     createForm.addEventListener("submit", async (event) => {
       event.preventDefault();
+      const submitBtn = createForm.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Creating...";
+
       const data = Object.fromEntries(new FormData(createForm).entries());
+      if (!data.plant) {
+        showError(createForm.parentElement, "Please select a plant.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create listing";
+        return;
+      }
       data.plant = Number(data.plant);
       data.price = data.price;
       data.quantity_available = Number(data.quantity_available);
@@ -128,7 +148,11 @@ const initDashboard = async () => {
         createForm.reset();
         initDashboard();
       } catch (error) {
+        showError(createForm.parentElement, error.message);
         setMessage(listingMsg, error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create listing";
       }
     });
   }
@@ -136,6 +160,9 @@ const initDashboard = async () => {
   // Save listing changes (batch update)
   if (saveBtn) {
     saveBtn.addEventListener("click", async () => {
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Saving...";
+
       const rows = document.querySelectorAll(".listing-row");
       const updates = [];
       rows.forEach((row) => {
@@ -154,7 +181,11 @@ const initDashboard = async () => {
         });
         setMessage(saveMsg, "Listings updated.");
       } catch (error) {
+        showError(listingsTable, error.message);
         setMessage(saveMsg, error.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save changes";
       }
     });
   }

@@ -10,6 +10,7 @@ const initCheckout = async () => {
   const summary = document.getElementById("checkout-cart-summary");
 
   // Load cart summary
+  if (summary) showLoading(summary);
   try {
     const [cart, listings] = await Promise.all([
       request("/api/cart/"),
@@ -31,8 +32,11 @@ const initCheckout = async () => {
         })
         .join("");
     }
-  } catch {
-    if (summary) summary.innerHTML = "<p>Could not load cart.</p>";
+  } catch (error) {
+    if (summary) {
+      summary.innerHTML = "";
+      showError(summary, `Could not load cart: ${error.message}`);
+    }
   }
 
   // Load centers
@@ -43,8 +47,9 @@ const initCheckout = async () => {
       centersData
         .map((c) => `<option value="${c.id}">${c.name} &mdash; ${c.city}, ${c.state}</option>`)
         .join("");
-  } catch {
+  } catch (error) {
     centerSelect.innerHTML = '<option value="">Could not load centers</option>';
+    showError(form.parentElement, `Could not load centers: ${error.message}`);
   }
 
   centerSelect.addEventListener("change", () => {
@@ -58,6 +63,18 @@ const initCheckout = async () => {
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    // Basic validation
+    if (!centerSelect.value) {
+      showError(form.parentElement, "Please select a distribution center.");
+      return;
+    }
+
+    const submitBtn = form.querySelector('[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Placing order...";
+    dismissError(form.parentElement);
+
     const payload = Object.fromEntries(new FormData(form).entries());
     payload.distribution_center = Number(payload.distribution_center);
 
@@ -81,7 +98,11 @@ const initCheckout = async () => {
       );
       message.innerHTML += `<a class="button ghost" href="orders.html">View your orders</a>`;
     } catch (error) {
+      showError(form.parentElement, error.message);
       setMessage(message, error.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Place order";
     }
   });
 };

@@ -8,7 +8,7 @@ const loadCart = async () => {
   const totalEl = document.getElementById("cart-total");
   if (!container) return;
 
-  container.innerHTML = "<p>Loading cart...</p>";
+  showLoading(container);
 
   try {
     const [cart, listings] = await Promise.all([
@@ -53,16 +53,21 @@ const loadCart = async () => {
 
     container.querySelectorAll("[data-cart-item]").forEach((btn) => {
       btn.addEventListener("click", async () => {
+        btn.disabled = true;
+        btn.textContent = "Removing...";
         try {
           await request(`/api/cart/${btn.dataset.cartItem}/`, { method: "DELETE" });
           loadCart();
         } catch (error) {
-          btn.textContent = error.message;
+          btn.disabled = false;
+          btn.textContent = "Remove";
+          showError(container, error.message);
         }
       });
     });
   } catch (error) {
-    container.innerHTML = `<p>${error.message}</p>`;
+    container.innerHTML = "";
+    showError(container, error.status === 401 ? "Session expired. Please sign in again." : `Could not load cart: ${error.message}`);
   }
 };
 
