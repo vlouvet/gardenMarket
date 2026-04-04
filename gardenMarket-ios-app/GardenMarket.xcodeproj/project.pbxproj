@@ -115,6 +115,7 @@
 		D3F459B45E4E4B0A3673485A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA49989F8609E7E608259389 /* User.swift */; };
 		D3F5CA6BBA9E08B05A73C7D3 /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B11E0A716EB962FB6CA8D /* ExtensionTests.swift */; };
 		DACAD72CC58838C5EA8738ED /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B29ED57D56411B3EAF437D /* ModelTests.swift */; };
+		DE1BED5D41D2368377441DFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE2EBB36638E4BA9496EC897 /* Assets.xcassets */; };
 		E1D30863A8BAC49B18C87D29 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7402991663FEF2E22D6585D /* LoginView.swift */; };
 		E247943DE57D6E385B61C913 /* ListingFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A6170E239C76ACABCBDF92 /* ListingFilterBar.swift */; };
 		E3072061ED2E51B6372904C4 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AFAC9F33EF6C83D9ACD857 /* APIClient.swift */; };
@@ -123,6 +124,7 @@
 		E6D2EBB688AF042D9E8AF3BD /* EditListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF94AE54FC1E4A6F9FC226D /* EditListingView.swift */; };
 		E70C67AD9226705625CA07FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5648CD49478D21575430F4C8 /* ContentView.swift */; };
 		E9B825E2F8AFDC5CE7609498 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362953BCC8EADF91DD1EC740 /* Cart.swift */; };
+		EC78B66E5F0788F86F84A027 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE2EBB36638E4BA9496EC897 /* Assets.xcassets */; };
 		EDA7C430C11BFB2B2AC9AF98 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475669F48B99F1D8F3F903C /* CartView.swift */; };
 		FA6374FEFAFF0B71A3BA9182 /* ListingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236D687E5E2258B1BFD9D9D /* ListingsViewModel.swift */; };
 		FCF217359D632547969BAF2D /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D23210D4696A625990819AC /* Listing.swift */; };
@@ -194,6 +196,7 @@
 		BA40FB1C8A5B6B92C5CCF1D4 /* GrowerDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowerDashboardViewModel.swift; sourceTree = "<group>"; };
 		BA8709EDA77972E5D79F41D9 /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
 		BB2C90EF784C7DDFE3D2586E /* CreatePlantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlantView.swift; sourceTree = "<group>"; };
+		BE2EBB36638E4BA9496EC897 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C24C00E9A5EED9EF95C9003C /* OnboardingChecklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChecklist.swift; sourceTree = "<group>"; };
 		C4D65BD347BF22476BC0752F /* PlantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantService.swift; sourceTree = "<group>"; };
 		C4ED0A98936A15A1001F7A12 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -409,6 +412,7 @@
 		D2F2D95303B0875A4F2048F3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BE2EBB36638E4BA9496EC897 /* Assets.xcassets */,
 				4FD020F58940E9A2BA1CC67D /* Info.plist */,
 			);
 			path = Resources;
@@ -464,6 +468,7 @@
 			buildConfigurationList = D7CE1DF021B5B324093DDAA3 /* Build configuration list for PBXNativeTarget "GardenMarket_iOS" */;
 			buildPhases = (
 				487CDD1D5EB2AC9CA8DE0204 /* Sources */,
+				4CEBC278EE3CE262E8F72F22 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -499,6 +504,7 @@
 			buildConfigurationList = ADD36B4B5128669E984DA3E8 /* Build configuration list for PBXNativeTarget "GardenMarket_macOS" */;
 			buildPhases = (
 				5E362865C6FB46C580BB82AC /* Sources */,
+				255A48A45D32EDEC7C8FEE24 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -525,13 +531,14 @@
 						ProvisioningStyle = Automatic;
 					};
 					9065B6E7604AF3E413C6D772 = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					A23F2FB0574E62AFE371388E = {
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					E5BA680D369D2EFEC544972E = {
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -557,6 +564,25 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		255A48A45D32EDEC7C8FEE24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC78B66E5F0788F86F84A027 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CEBC278EE3CE262E8F72F22 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE1BED5D41D2368377441DFD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1E52B5C1DBC2F044F75EF739 /* Sources */ = {
@@ -786,7 +812,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 643KPF758R;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -870,7 +896,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 643KPF758R;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -890,7 +916,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 643KPF758R;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -909,6 +935,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -924,10 +951,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gardenmarket.app;
 				PRODUCT_NAME = GardenMarket;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.10;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -937,12 +960,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 643KPF758R;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GardenMarket/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GardenMarket;
@@ -962,6 +985,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -977,10 +1001,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gardenmarket.app;
 				PRODUCT_NAME = GardenMarket;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.10;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -992,7 +1012,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 643KPF758R;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1011,12 +1031,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 643KPF758R;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GardenMarket/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GardenMarket;
