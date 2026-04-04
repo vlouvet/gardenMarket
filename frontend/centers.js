@@ -2,7 +2,7 @@ const loadCenters = async () => {
   const container = document.getElementById("centers-list");
   if (!container) return;
 
-  container.innerHTML = "<p>Loading centers...</p>";
+  showLoading(container);
 
   try {
     const centers = await request("/api/centers/");
@@ -39,8 +39,9 @@ const loadCenters = async () => {
         `;
       })
       .join("");
-  } catch {
-    container.innerHTML = "<p>Could not load distribution centers.</p>";
+  } catch (error) {
+    container.innerHTML = "";
+    showError(container, `Could not load distribution centers: ${error.message}`);
   }
 };
 

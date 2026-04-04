@@ -21,12 +21,15 @@
 
 ## Frontend — Auth & UX
 
-- [ ] Persist login state across page loads — redirect unauthenticated users away from protected pages
-- [ ] Show/hide navigation links based on auth state and user role (consumer vs gardener vs admin)
-- [ ] Add loading spinners or skeleton screens while API calls are in flight
-- [ ] Add proper error banners for failed API calls (network errors, 4xx, 5xx)
-- [ ] Add form validation feedback (inline errors, password-strength hints)
-- [ ] Add logout functionality (clear token, redirect to home)
+- [x] Persist login state across page loads — redirect unauthenticated users away from protected pages
+- [x] Show/hide navigation links based on auth state and user role (consumer vs gardener vs admin)
+- [x] Add loading spinners or skeleton screens while API calls are in flight
+- [x] Add proper error banners for failed API calls (network errors, 4xx, 5xx)
+- [x] Add form validation feedback (inline errors, password-strength hints)
+- [x] Add logout functionality (clear token, redirect to home)
+
+## Frontend - images and assets
+- [ ] create app icon and other required image asset files
 
 ## Frontend — PWA & Offline
 
@@ -42,7 +45,7 @@
 - [ ] Add keyboard navigation support for the gallery carousel
 - [ ] Add a build step (e.g. Vite) for minification, bundling, and cache-busted filenames
 - [ ] Add basic frontend tests (smoke tests for page load, form submission)
-- [ ] create app icon and other required image asset files
+
 
 ## Frontend — Content & Compliance
 

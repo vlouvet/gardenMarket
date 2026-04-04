@@ -11,7 +11,7 @@ const loadOrders = async () => {
   const container = document.getElementById("orders-list");
   if (!container) return;
 
-  container.innerHTML = "<p>Loading orders...</p>";
+  showLoading(container);
 
   try {
     const orders = await request("/api/orders/");
@@ -42,7 +42,8 @@ const loadOrders = async () => {
       })
       .join("");
   } catch (error) {
-    container.innerHTML = `<p>${error.message}</p>`;
+    container.innerHTML = "";
+    showError(container, `Could not load orders: ${error.message}`);
   }
 };
 

@@ -29,15 +29,18 @@ const renderCarousel = () => {
   if (addBtn) {
     addBtn.addEventListener("click", async () => {
       if (!requireAuth()) return;
+      addBtn.disabled = true;
+      addBtn.textContent = "Adding...";
       try {
         await request("/api/cart/", {
           method: "POST",
           body: JSON.stringify({ listing: item.id, quantity: 1 }),
         });
         addBtn.textContent = "Added!";
-        addBtn.disabled = true;
       } catch (error) {
-        addBtn.textContent = error.message;
+        addBtn.disabled = false;
+        addBtn.textContent = "Add to cart";
+        showError(card, error.message);
       }
     });
   }
@@ -53,12 +56,13 @@ const loadAndBindCarousel = async () => {
   const fetchListings = async (type) => {
     const params = type ? `?type=${type}` : "";
     try {
-      card.innerHTML = "<p>Loading listings...</p>";
+      showLoading(card);
       carouselItems = await request(`/api/listings/${params}`);
       carouselIndex = 0;
       renderCarousel();
-    } catch {
-      card.innerHTML = "<p>Could not load listings.</p>";
+    } catch (error) {
+      card.innerHTML = "";
+      showError(card, `Could not load listings: ${error.message}`);
     }
   };
 

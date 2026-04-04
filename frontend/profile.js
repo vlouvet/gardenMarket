@@ -7,6 +7,8 @@ const loadProfile = async () => {
   const message = document.getElementById("profile-message");
   if (!form) return;
 
+  const submitBtn = form.querySelector('[type="submit"]');
+
   try {
     const [profile, me] = await Promise.all([
       request("/api/accounts/profile/"),
@@ -23,11 +25,15 @@ const loadProfile = async () => {
     if (emailEl) emailEl.textContent = me.email || "--";
     if (roleEl) roleEl.textContent = me.role || "--";
   } catch (error) {
-    setMessage(message, error.message);
+    showError(form.parentElement, `Could not load profile: ${error.message}`);
   }
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Saving...";
+    dismissError(form.parentElement);
+
     const payload = Object.fromEntries(new FormData(form).entries());
     try {
       await request("/api/accounts/profile/", {
@@ -36,16 +42,17 @@ const loadProfile = async () => {
       });
       setMessage(message, "Profile updated.");
     } catch (error) {
-      setMessage(message, error.message);
+      showError(form.parentElement, error.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Save profile";
     }
   });
 
+  // Logout button (page-specific, in addition to nav)
   const logoutBtn = document.getElementById("logout-button");
   if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem(TOKEN_KEY);
-      window.location.href = "index.html";
-    });
+    logoutBtn.addEventListener("click", logout);
   }
 };
 
