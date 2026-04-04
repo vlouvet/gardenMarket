@@ -1,14 +1,14 @@
-const CACHE_NAME = "gardenmarket-static-v1";
+const CACHE_NAME = "gardenmarket-static-v2";
 const ASSETS = [
-  "/frontend/index.html",
-  "/frontend/gallery.html",
-  "/frontend/grow-with-us.html",
-  "/frontend/register.html",
-  "/frontend/terms.html",
-  "/frontend/privacy.html",
-  "/frontend/seller-agreement.html",
-  "/frontend/styles.css",
-  "/frontend/app.js",
+  "/index.html",
+  "/gallery.html",
+  "/grow-with-us.html",
+  "/register.html",
+  "/terms.html",
+  "/privacy.html",
+  "/seller-agreement.html",
+  "/styles.css",
+  "/app.js",
 ];
 
 self.addEventListener("install", (event) => {
