@@ -28,12 +28,6 @@
 - [ ] Add form validation feedback (inline errors, password-strength hints)
 - [ ] Add logout functionality (clear token, redirect to home)
 
-## Frontend — Content & Compliance
-
-- [ ] Write real content for terms.html (currently a placeholder)
-- [ ] Write real content for privacy.html (currently a placeholder)
-- [ ] Write real content for seller-agreement.html (currently a placeholder)
-
 ## Frontend — PWA & Offline
 
 - [ ] Add a web app manifest (manifest.json) with app name, icons, and theme color
@@ -48,3 +42,10 @@
 - [ ] Add keyboard navigation support for the gallery carousel
 - [ ] Add a build step (e.g. Vite) for minification, bundling, and cache-busted filenames
 - [ ] Add basic frontend tests (smoke tests for page load, form submission)
+- [ ] create app icon and other required image asset files
+
+## Frontend — Content & Compliance
+
+- [ ] Write real content for terms.html (currently a placeholder)
+- [ ] Write real content for privacy.html (currently a placeholder)
+- [ ] Write real content for seller-agreement.html (currently a placeholder)

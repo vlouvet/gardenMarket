@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1600"
+   LastUpgradeVersion = "2630"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -14,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5BA680D369D2EFEC544972E"
-               BuildableName = "GardenMarket.app"
-               BlueprintName = "GardenMarket_macOS"
-               ReferencedContainer = "container:GardenMarket.xcodeproj">
+               BlueprintIdentifier = "GardenMarket"
+               BuildableName = "GardenMarket"
+               BlueprintName = "GardenMarket"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,18 +29,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A23F2FB0574E62AFE371388E"
-               BuildableName = "GardenMarketTests_macOS.xctest"
-               BlueprintName = "GardenMarketTests_macOS"
-               ReferencedContainer = "container:GardenMarket.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -55,10 +44,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E5BA680D369D2EFEC544972E"
-            BuildableName = "GardenMarket.app"
-            BlueprintName = "GardenMarket_macOS"
-            ReferencedContainer = "container:GardenMarket.xcodeproj">
+            BlueprintIdentifier = "GardenMarket"
+            BuildableName = "GardenMarket"
+            BlueprintName = "GardenMarket"
+            ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,10 +61,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E5BA680D369D2EFEC544972E"
-            BuildableName = "GardenMarket.app"
-            BlueprintName = "GardenMarket_macOS"
-            ReferencedContainer = "container:GardenMarket.xcodeproj">
+            BlueprintIdentifier = "GardenMarket"
+            BuildableName = "GardenMarket"
+            BlueprintName = "GardenMarket"
+            ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
