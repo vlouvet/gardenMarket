@@ -1,4 +1,5 @@
-const API_BASE = "";
+const API_BASE =
+  document.querySelector('meta[name="api-base"]')?.getAttribute("content") || "";
 const TOKEN_KEY = "gardenmarket_access_token";
 
 const carouselItems = [
@@ -201,7 +202,7 @@ const initPage = () => {
   bindCarousel();
   bindUpgrade();
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/frontend/service-worker.js").catch(() => undefined);
+    navigator.serviceWorker.register("/service-worker.js").catch(() => undefined);
   }
 };
 

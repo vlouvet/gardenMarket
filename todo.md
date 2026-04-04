@@ -2,10 +2,10 @@
 
 ## Frontend — Docker / Infrastructure Integration
 
-- [ ] Add an nginx service to docker-compose.yml to serve the static frontend and reverse-proxy `/api/` to the Django backend
-- [ ] Make `API_BASE` in app.js configurable (inject at build time or read from a `<meta>` tag) so the frontend can target different backend URLs per environment
-- [ ] Fix service-worker.js registration path — currently hardcoded to `/frontend/service-worker.js`, will break when served from nginx at `/`
-- [ ] Update service-worker.js cache list to match the actual served paths (currently assumes `/frontend/` prefix)
+- [x] Add an nginx service to docker-compose.yml to serve the static frontend and reverse-proxy `/api/` to the Django backend
+- [x] Make `API_BASE` in app.js configurable (inject at build time or read from a `<meta>` tag) so the frontend can target different backend URLs per environment
+- [x] Fix service-worker.js registration path — currently hardcoded to `/frontend/service-worker.js`, will break when served from nginx at `/`
+- [x] Update service-worker.js cache list to match the actual served paths (currently assumes `/frontend/` prefix)
 
 ## Frontend — API Integration
 
