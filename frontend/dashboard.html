@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Grower Dashboard | GardenMarket</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer data-domain="gardenmarket.local" src="https://plausible.io/js/script.js"></script>
+    <script defer src="app.js"></script>
+    <script defer src="dashboard.js"></script>
+  </head>
+  <body data-page="dashboard">
+    <header class="site-header">
+      <div class="logo">GardenMarket</div>
+      <nav class="nav-links"></nav>
+    </header>
+
+    <main class="page-content">
+      <div class="page-header">
+        <h1>Grower Dashboard</h1>
+        <p id="dashboard-status"></p>
+      </div>
+
+      <section class="panel" id="grower-profile-section">
+        <h2>Your Grower Profile</h2>
+        <div id="grower-profile"></div>
+      </section>
+
+      <section class="panel" id="create-listing-section">
+        <h2>Create Listing</h2>
+        <form id="create-listing-form" class="stack">
+          <label>
+            Plant
+            <select id="plant-select" name="plant" required>
+              <option value="">Loading plants...</option>
+            </select>
+          </label>
+          <label>Type
+            <select name="type" required>
+              <option value="SEED">Seed</option>
+              <option value="CLONE">Clone</option>
+              <option value="PRODUCE">Produce</option>
+            </select>
+          </label>
+          <label>Unit <input type="text" name="unit" placeholder="e.g. pack, pint, bundle" required /></label>
+          <label>Price <input type="number" name="price" step="0.01" min="0" required /></label>
+          <label>Quantity available <input type="number" name="quantity_available" min="0" required /></label>
+          <label>Pickup window <input type="text" name="pickup_window" placeholder="e.g. Sat 9-12" /></label>
+          <label>Pickup days <input type="text" name="pickup_days" placeholder="e.g. Saturday, Sunday" /></label>
+          <button class="button primary" type="submit">Create listing</button>
+          <p id="listing-message" class="message"></p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Your Listings</h2>
+        <div id="listings-table"></div>
+        <button class="button primary" id="save-listings-btn" style="display:none;margin-top:16px">Save changes</button>
+        <p id="listings-save-message" class="message"></p>
+      </section>
+
+      <section class="panel">
+        <h2>Orders for Your Items</h2>
+        <div id="gardener-orders"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>GardenMarket 2026</span>
+      <div class="footer-links">
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="seller-agreement.html">Seller Agreement</a>
+      </div>
+    </footer>
+  </body>
+</html>

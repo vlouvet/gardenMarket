@@ -40,3 +40,18 @@ Thumbs.db
 backend/celerybeat-schedule
 
 .claude/
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+DerivedData/
+build/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+.swiftpm/xcode/xcuserdata/
+.swiftpm/xcode/xcshareddata/

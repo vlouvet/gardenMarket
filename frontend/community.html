@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Community | GardenMarket</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer data-domain="gardenmarket.local" src="https://plausible.io/js/script.js"></script>
+    <script defer src="app.js"></script>
+    <script defer src="community.js"></script>
+  </head>
+  <body data-page="community">
+    <header class="site-header">
+      <div class="logo">GardenMarket</div>
+      <nav class="nav-links"></nav>
+    </header>
+
+    <main class="page-content">
+      <div class="page-header">
+        <h1>Community</h1>
+        <p>Posts and photos from growers.</p>
+      </div>
+
+      <section class="panel new-post-section" id="new-post-section" style="display:none">
+        <h2>New Post</h2>
+        <form id="post-form" class="stack">
+          <label>Plant <input type="text" name="plant" placeholder="Plant name or ID" required /></label>
+          <label>Text <textarea name="text" rows="3" required></textarea></label>
+          <label>Photo (optional) <input type="file" name="image" accept="image/*" /></label>
+          <button class="button primary" type="submit">Publish</button>
+          <p id="post-message" class="message"></p>
+        </form>
+      </section>
+
+      <div id="posts-feed"></div>
+    </main>
+
+    <footer class="site-footer">
+      <span>GardenMarket 2026</span>
+      <div class="footer-links">
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="seller-agreement.html">Seller Agreement</a>
+      </div>
+    </footer>
+  </body>
+</html>

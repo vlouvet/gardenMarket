@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles.css" />
     <script defer data-domain="gardenmarket.local" src="https://plausible.io/js/script.js"></script>
     <script defer src="app.js"></script>
+    <script defer src="home.js"></script>
   </head>
   <body data-page="home">
     <header class="site-header">
@@ -40,11 +41,11 @@
       <div class="hero-card">
         <div class="hero-metric">
           <span class="metric-label">Active listings</span>
-          <span class="metric-value">128</span>
+          <span class="metric-value" id="metric-listings">--</span>
         </div>
         <div class="hero-metric">
           <span class="metric-label">Distribution hubs</span>
-          <span class="metric-value">6</span>
+          <span class="metric-value" id="metric-centers">--</span>
         </div>
         <div class="hero-metric">
           <span class="metric-label">Avg. miles saved</span>

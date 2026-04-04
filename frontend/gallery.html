@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles.css" />
     <script defer data-domain="gardenmarket.local" src="https://plausible.io/js/script.js"></script>
     <script defer src="app.js"></script>
+    <script defer src="gallery.js"></script>
   </head>
   <body data-page="gallery">
     <header class="site-header">
@@ -28,6 +29,18 @@
       <div class="gallery-header">
         <h1>Produce Gallery</h1>
         <p>Scroll through seeds, clones, and produce currently available to buy.</p>
+      </div>
+
+      <div class="filter-row">
+        <label>
+          Filter by type
+          <select id="listing-filter">
+            <option value="">All</option>
+            <option value="SEED">Seeds</option>
+            <option value="CLONE">Clones</option>
+            <option value="PRODUCE">Produce</option>
+          </select>
+        </label>
       </div>
 
       <section class="carousel">

@@ -9,15 +9,15 @@
 
 ## Frontend — API Integration
 
-- [ ] Replace hardcoded carousel items in app.js with a fetch to `GET /api/listings/` so the gallery shows real data
-- [ ] Replace hardcoded hero metrics (128 listings, 6 hubs, 72 miles) with live counts from the API
-- [ ] Add a shopping-cart page that calls `POST /api/cart/` and displays current cart items
-- [ ] Add an order-creation flow that calls `POST /api/orders/` after selecting a distribution center
-- [ ] Add an order-history / tracking page that calls `GET /api/orders/`
-- [ ] Add a user profile page that fetches and updates `GET/PATCH /api/accounts/profile/`
-- [ ] Add a grower dashboard page for managing listings (`GET/POST /api/listings/`, `GET /api/orders/gardener/`)
-- [ ] Integrate media uploads — allow growers to create posts and upload photos via `/api/posts/` and `/api/photos/`
-- [ ] Show distribution center locations fetched from `GET /api/centers/`
+- [x] Replace hardcoded carousel items in app.js with a fetch to `GET /api/listings/` so the gallery shows real data
+- [x] Replace hardcoded hero metrics (128 listings, 6 hubs, 72 miles) with live counts from the API
+- [x] Add a shopping-cart page that calls `POST /api/cart/` and displays current cart items
+- [x] Add an order-creation flow that calls `POST /api/orders/` after selecting a distribution center
+- [x] Add an order-history / tracking page that calls `GET /api/orders/`
+- [x] Add a user profile page that fetches and updates `GET/PATCH /api/accounts/profile/`
+- [x] Add a grower dashboard page for managing listings (`GET/POST /api/listings/`, `GET /api/orders/gardener/`)
+- [x] Integrate media uploads — allow growers to create posts and upload photos via `/api/posts/` and `/api/photos/`
+- [x] Show distribution center locations fetched from `GET /api/centers/`
 
 ## Frontend — Auth & UX
 
@@ -27,12 +27,6 @@
 - [ ] Add proper error banners for failed API calls (network errors, 4xx, 5xx)
 - [ ] Add form validation feedback (inline errors, password-strength hints)
 - [ ] Add logout functionality (clear token, redirect to home)
-
-## Frontend — Content & Compliance
-
-- [ ] Write real content for terms.html (currently a placeholder)
-- [ ] Write real content for privacy.html (currently a placeholder)
-- [ ] Write real content for seller-agreement.html (currently a placeholder)
 
 ## Frontend — PWA & Offline
 
@@ -48,3 +42,10 @@
 - [ ] Add keyboard navigation support for the gallery carousel
 - [ ] Add a build step (e.g. Vite) for minification, bundling, and cache-busted filenames
 - [ ] Add basic frontend tests (smoke tests for page load, form submission)
+- [ ] create app icon and other required image asset files
+
+## Frontend — Content & Compliance
+
+- [ ] Write real content for terms.html (currently a placeholder)
+- [ ] Write real content for privacy.html (currently a placeholder)
+- [ ] Write real content for seller-agreement.html (currently a placeholder)
