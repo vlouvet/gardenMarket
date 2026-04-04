@@ -64,23 +64,40 @@ const loadAndBindCarousel = async () => {
 
   await fetchListings();
 
-  if (prev && next) {
-    prev.addEventListener("click", () => {
-      if (carouselItems.length === 0) return;
-      carouselIndex = (carouselIndex - 1 + carouselItems.length) % carouselItems.length;
-      renderCarousel();
-    });
+  const goToPrev = () => {
+    if (carouselItems.length === 0) return;
+    carouselIndex = (carouselIndex - 1 + carouselItems.length) % carouselItems.length;
+    renderCarousel();
+  };
 
-    next.addEventListener("click", () => {
-      if (carouselItems.length === 0) return;
-      carouselIndex = (carouselIndex + 1) % carouselItems.length;
-      renderCarousel();
-    });
+  const goToNext = () => {
+    if (carouselItems.length === 0) return;
+    carouselIndex = (carouselIndex + 1) % carouselItems.length;
+    renderCarousel();
+  };
+
+  if (prev && next) {
+    prev.addEventListener("click", goToPrev);
+    next.addEventListener("click", goToNext);
+
+    // Keyboard navigation: arrow keys when carousel is focused
+    const carousel = document.querySelector(".carousel");
+    if (carousel) {
+      carousel.setAttribute("tabindex", "0");
+      carousel.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          goToPrev();
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          goToNext();
+        }
+      });
+    }
 
     setInterval(() => {
       if (carouselItems.length === 0) return;
-      carouselIndex = (carouselIndex + 1) % carouselItems.length;
-      renderCarousel();
+      goToNext();
     }, 7000);
   }
 

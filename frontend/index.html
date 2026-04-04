@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2d6f65" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-180.png" />
     <title>GardenMarket</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,8 +22,8 @@
   </head>
   <body data-page="home">
     <header class="site-header">
-      <div class="logo">GardenMarket</div>
-      <nav class="nav-links">
+      <div class="logo" role="banner">GardenMarket</div>
+      <nav class="nav-links" aria-label="Main navigation">
         <a href="gallery.html">Produce Gallery</a>
         <a href="grow-with-us.html">Grow With Us</a>
         <a href="register.html">Register</a>
@@ -54,7 +59,7 @@
       </div>
     </main>
 
-    <section class="feature-grid">
+    <section class="feature-grid" aria-label="Key features">
       <article>
         <h3>Eligibility-first browsing</h3>
         <p>See only listings that can reach your nearest approved distribution center.</p>
@@ -77,13 +82,13 @@
       <a class="button primary" href="register.html">Create an account</a>
     </section>
 
-    <footer class="site-footer">
+    <footer class="site-footer" role="contentinfo">
       <span>GardenMarket 2026</span>
-      <div class="footer-links">
+      <nav class="footer-links" aria-label="Legal links">
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>
         <a href="seller-agreement.html">Seller Agreement</a>
-      </div>
+      </nav>
     </footer>
   </body>
 </html>

@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2d6f65" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-180.png" />
     <title>Produce Gallery | GardenMarket</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,8 +22,8 @@
   </head>
   <body data-page="gallery">
     <header class="site-header">
-      <div class="logo">GardenMarket</div>
-      <nav class="nav-links">
+      <div class="logo" role="banner">GardenMarket</div>
+      <nav class="nav-links" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="grow-with-us.html">Grow With Us</a>
         <a href="register.html">Register</a>
@@ -32,9 +37,9 @@
       </div>
 
       <div class="filter-row">
-        <label>
+        <label for="listing-filter">
           Filter by type
-          <select id="listing-filter">
+          <select id="listing-filter" aria-label="Filter listings by type">
             <option value="">All</option>
             <option value="SEED">Seeds</option>
             <option value="CLONE">Clones</option>
@@ -43,23 +48,23 @@
         </label>
       </div>
 
-      <section class="carousel">
+      <section class="carousel" role="region" aria-label="Product carousel" aria-roledescription="carousel">
         <div class="carousel-controls">
-          <button class="button ghost" id="prev-item">Prev</button>
-          <div class="carousel-label" id="carousel-label"></div>
-          <button class="button ghost" id="next-item">Next</button>
+          <button class="button ghost" id="prev-item" aria-label="Previous item">Prev</button>
+          <div class="carousel-label" id="carousel-label" aria-live="polite"></div>
+          <button class="button ghost" id="next-item" aria-label="Next item">Next</button>
         </div>
-        <div class="carousel-card" id="carousel-card"></div>
+        <div class="carousel-card" id="carousel-card" role="group" aria-label="Current listing"></div>
       </section>
     </main>
 
     <footer class="site-footer">
       <span>GardenMarket 2026</span>
-      <div class="footer-links">
+      <nav class="footer-links" aria-label="Legal links">
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>
         <a href="seller-agreement.html">Seller Agreement</a>
-      </div>
+      </nav>
     </footer>
   </body>
 </html>

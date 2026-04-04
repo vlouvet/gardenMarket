@@ -30,6 +30,7 @@ media/
 
 # Node
 node_modules/
+dist/
 
 # Docker
 *.pid

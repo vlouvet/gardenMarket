@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2d6f65" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-180.png" />
     <title>Grower Dashboard | GardenMarket</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,8 +22,8 @@
   </head>
   <body data-page="dashboard">
     <header class="site-header">
-      <div class="logo">GardenMarket</div>
-      <nav class="nav-links"></nav>
+      <div class="logo" role="banner">GardenMarket</div>
+      <nav class="nav-links" aria-label="Main navigation"></nav>
     </header>
 
     <main class="page-content">
@@ -34,7 +39,7 @@
 
       <section class="panel" id="create-listing-section">
         <h2>Create Listing</h2>
-        <form id="create-listing-form" class="stack">
+        <form id="create-listing-form" class="stack" aria-label="Create listing form">
           <label>
             Plant
             <select id="plant-select" name="plant" required>
@@ -73,11 +78,11 @@
 
     <footer class="site-footer">
       <span>GardenMarket 2026</span>
-      <div class="footer-links">
+      <nav class="footer-links" aria-label="Legal links">
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>
         <a href="seller-agreement.html">Seller Agreement</a>
-      </div>
+      </nav>
     </footer>
   </body>
 </html>

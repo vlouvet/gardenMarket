@@ -47,6 +47,7 @@ const initNav = () => {
   const nav = document.querySelector(".nav-links");
   if (!nav) return;
   const loggedIn = !!getToken();
+  nav.setAttribute("aria-label", "Main navigation");
   nav.innerHTML = [
     '<a href="index.html">Home</a>',
     '<a href="gallery.html">Gallery</a>',
