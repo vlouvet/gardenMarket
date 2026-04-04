@@ -30,19 +30,19 @@
 
 ## Frontend — PWA & Offline
 
-- [ ] Add a web app manifest (manifest.json) with app name, icons, and theme color
-- [ ] Add PWA meta tags to all HTML pages (`<meta name="theme-color">`, Apple touch icon, etc.)
-- [ ] Add an offline fallback page shown when the network is unavailable
-- [ ] Implement cache-busting for the service worker when static assets change
+- [x] Add a web app manifest (manifest.json) with app name, icons, and theme color
+- [x] Add PWA meta tags to all HTML pages (`<meta name="theme-color">`, Apple touch icon, etc.)
+- [x] Add an offline fallback page shown when the network is unavailable
+- [x] Implement cache-busting for the service worker when static assets change
 
 ## Frontend — Quality & Accessibility
 
-- [ ] Add ARIA labels and roles to interactive elements (carousel, forms, nav)
-- [ ] Ensure all images have descriptive alt text
-- [ ] Add keyboard navigation support for the gallery carousel
-- [ ] Add a build step (e.g. Vite) for minification, bundling, and cache-busted filenames
-- [ ] Add basic frontend tests (smoke tests for page load, form submission)
-- [ ] create app icon and other required image asset files
+- [x] Add ARIA labels and roles to interactive elements (carousel, forms, nav)
+- [x] Ensure all images have descriptive alt text
+- [x] Add keyboard navigation support for the gallery carousel
+- [x] Add a build step (e.g. Vite) for minification, bundling, and cache-busted filenames
+- [x] Add basic frontend tests (smoke tests for page load, form submission)
+- [x] create app icon and other required image asset files
 
 ## Frontend — Content & Compliance
 

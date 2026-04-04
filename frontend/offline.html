@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2d6f65" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-180.png" />
+    <title>Offline | GardenMarket</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        color: #1b1a16;
+        background: radial-gradient(circle at top left, #fceee1, #f6f1ea) fixed;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+      }
+      h1 {
+        font-family: "Fraunces", serif;
+        letter-spacing: -0.02em;
+        margin: 0 0 12px;
+      }
+      p { line-height: 1.6; color: #4c4a44; margin: 0 0 24px; max-width: 420px; }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 20px;
+        border-radius: 999px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        background: #d76a4d;
+        color: #fffaf2;
+        font: inherit;
+        box-shadow: 0 12px 30px rgba(215, 106, 77, 0.3);
+      }
+      .icon { font-size: 3rem; margin-bottom: 16px; }
+    </style>
+  </head>
+  <body>
+    <div class="icon" aria-hidden="true">&#127793;</div>
+    <h1>You're offline</h1>
+    <p>
+      It looks like your internet connection dropped. Check your connection
+      and try again — your cart and account data will be waiting when you're back.
+    </p>
+    <button class="button" onclick="window.location.reload()">Try again</button>
+  </body>
+</html>

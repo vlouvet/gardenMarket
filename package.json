@@ -1,0 +1,15 @@
+{
+  "name": "gardenmarket-frontend",
+  "private": true,
+  "scripts": {
+    "dev": "vite frontend",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0",
+    "jsdom": "^26.0.0"
+  }
+}
