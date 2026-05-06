@@ -1,5 +1,6 @@
 services:
   web:
+    image: gardenmarket-app
     build:
       context: .
       dockerfile: docker/Dockerfile
@@ -11,6 +12,8 @@ services:
     ports:
       - "8000:8000"
     depends_on:
+      db:
+        condition: service_healthy
       redis:
         condition: service_healthy
       minio:
@@ -25,7 +28,6 @@ services:
 
   db:
     image: postgres:16
-    profiles: ["localdb"]
     environment:
       POSTGRES_USER: garden
       POSTGRES_PASSWORD: garden
@@ -67,9 +69,7 @@ services:
       start_period: 10s
 
   worker:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
+    image: gardenmarket-app
     env_file:
       - .env
     command: celery -A config.celery_app worker -l info
@@ -91,9 +91,7 @@ services:
         condition: service_healthy
 
   beat:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
+    image: gardenmarket-app
     env_file:
       - .env
     command: celery -A config.celery_app beat -l info
