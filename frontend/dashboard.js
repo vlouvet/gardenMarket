@@ -107,18 +107,42 @@ const initDashboard = async () => {
       if (orders.length === 0) {
         ordersEl.innerHTML = "<p>No orders for your items yet.</p>";
       } else {
+        const readyableStatuses = new Set(["SCHEDULED", "AWAITING_PICKUP_SCHEDULING"]);
         ordersEl.innerHTML = orders
-          .map(
-            (o) => `
-            <div class="order-card panel">
-              <h3>Order #${o.id}</h3>
-              <span class="pill">${o.status}</span>
-              <p>Pickup: ${o.pickup_date || "--"} &middot; ${o.pickup_window || "--"}</p>
-              <ul>${(o.items || []).map((i) => `<li>${i.plant_name || `Listing #${i.listing}`} &times; ${i.quantity}</li>`).join("")}</ul>
-            </div>
-          `
-          )
+          .map((o) => {
+            const items = (o.items || [])
+              .map((i) => `<li>${i.plant_name || `Listing #${i.listing}`} &times; ${i.quantity}</li>`)
+              .join("");
+            const action = readyableStatuses.has(o.status)
+              ? `<button class="button primary" data-mark-ready="${o.id}">Mark ready for pickup</button>`
+              : "";
+            return `
+              <div class="order-card panel">
+                <h3>Order #${o.id}</h3>
+                <span class="pill">${o.status}</span>
+                <p>Pickup: ${o.pickup_date || "--"} &middot; ${o.pickup_window || "--"}</p>
+                <ul>${items}</ul>
+                ${action}
+              </div>
+            `;
+          })
           .join("");
+
+        ordersEl.querySelectorAll("[data-mark-ready]").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            btn.disabled = true;
+            const original = btn.textContent;
+            btn.textContent = "Marking...";
+            try {
+              await request(`/api/orders/${btn.dataset.markReady}/mark_ready/`, { method: "POST" });
+              initDashboard();
+            } catch (error) {
+              btn.disabled = false;
+              btn.textContent = original;
+              showError(ordersEl, error.message);
+            }
+          });
+        });
       }
     }
   } catch (error) {

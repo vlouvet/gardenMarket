@@ -21,6 +21,7 @@ class Order(models.Model):
         CREATED = "CREATED", "Created"
         AWAITING_PICKUP_SCHEDULING = "AWAITING_PICKUP_SCHEDULING", "Awaiting pickup"
         SCHEDULED = "SCHEDULED", "Scheduled"
+        READY_FOR_PICKUP = "READY_FOR_PICKUP", "Ready for pickup"
         COMPLETE = "COMPLETE", "Complete"
         CANCELLED = "CANCELLED", "Cancelled"
 

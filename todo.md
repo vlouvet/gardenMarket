@@ -23,12 +23,13 @@ Pre-seeded accounts (after `make seed`, password `changeme`):
 - [x] **No image upload for listings.** Looks unfinished in the gallery.
   - Backend: add `image` (or M2M `photos`) to `Listing` + migration; surface in `ListingSerializer`.
   - Frontend: `<input type="file">` on the dashboard create-listing form; render the image in `gallery.js` and `dashboard.js`.
-- [ ] **No fulfillment action.** Seller can see incoming orders but can't update status. Add `POST /api/orders/{id}/mark_ready/` (or similar transitions) and a button in the dashboard order card.
+- [x] **No fulfillment action.** Seller can see incoming orders but can't update status. Add `POST /api/orders/{id}/mark_ready/` (or similar transitions) and a button in the dashboard order card.
 - [x] **Dashboard listings table shows "Plant #N" fallback** (`frontend/dashboard.js:78`). Once `plant_name` is on the serializer, render that instead.
 - [x] **Bonus: more enum mismatches** found during demo-blocker work — `SEED` should be `SEEDS`, `unit` was free-text but model takes `each|gram|lb|bundle`, `status` was uppercase but model uses lowercase. All fixed.
 
 ## Buyer flow gaps
 
+- [ ] **New: buyers without lat/lon can't check out.** `validate_order_eligibility` requires the consumer's profile to have lat/lon. Today registration only collects email/password/role — checkout 400s with "No eligible distribution centers" until the user manually saves an address that triggers the geocode signal. Either (a) include address fields in the registration form, (b) backfill lat/lon on the seeded demo buyer, or (c) make `eligible_centers_for_location` fall back to all centers if no location is set. Pick one before the demo.
 - [ ] **Centers page shows "?" capacity** until a date filter is applied (`backend/logistics/views.py:38`, surfaced at `frontend/centers.js:37`). Default `remaining_capacity` to today's date so the first paint is informative.
 - [ ] **Orders page is sparse.** Buyer should see plant name + pickup window + check-in code in one view (`frontend/orders.html`, `frontend/orders.js`). Today they see "Order #4 — Listing #5".
 - [ ] **No way to clear or update a cart item** before checkout. Add delete + quantity edit on `cart.html`.

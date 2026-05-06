@@ -3,8 +3,18 @@ import { request, requireAuth, showLoading, showError } from "./app.js";
 const STATUS_COLORS = {
   AWAITING_PICKUP_SCHEDULING: "",
   SCHEDULED: "accent-2",
+  READY_FOR_PICKUP: "accent-2",
   COMPLETE: "accent-2",
   CANCELLED: "ghost",
+};
+
+const STATUS_LABELS = {
+  AWAITING_PICKUP_SCHEDULING: "Awaiting pickup",
+  SCHEDULED: "Scheduled",
+  READY_FOR_PICKUP: "Ready for pickup",
+  COMPLETE: "Complete",
+  CANCELLED: "Cancelled",
+  CREATED: "Created",
 };
 
 const loadOrders = async () => {
@@ -40,7 +50,7 @@ const loadOrders = async () => {
           <article class="panel order-card">
             <div class="order-header">
               <h3>Order #${o.id}</h3>
-              <span class="pill${statusClass ? " " + statusClass : ""}">${o.status}</span>
+              <span class="pill${statusClass ? " " + statusClass : ""}">${STATUS_LABELS[o.status] || o.status}</span>
             </div>
             <p>Pickup: ${o.pickup_date || "--"} &middot; ${o.pickup_window || "--"}</p>
             <p>Payment: ${o.payment_status || "--"} &middot; Check-in: <code>${o.checkin_code || "N/A"}</code></p>

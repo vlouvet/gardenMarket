@@ -211,6 +211,34 @@ class OrderViewSet(viewsets.ModelViewSet):
         orders = Order.objects.filter(items__listing__plant__gardener__user=request.user).distinct()
         return Response(OrderSerializer(orders, many=True).data)
 
+    @action(detail=True, methods=["post"], permission_classes=[permissions.IsAuthenticated, IsGardener])
+    def mark_ready(self, request, pk=None):
+        order = Order.objects.filter(
+            pk=pk,
+            items__listing__plant__gardener__user=request.user,
+        ).distinct().first()
+        if order is None:
+            return Response(
+                {"detail": "Order not found or not owned by your listings."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        if order.status not in (
+            Order.Status.SCHEDULED,
+            Order.Status.AWAITING_PICKUP_SCHEDULING,
+        ):
+            return Response(
+                {"detail": f"Cannot mark ready from status {order.status}."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        order.status = Order.Status.READY_FOR_PICKUP
+        order.save(update_fields=["status"])
+        send_order_notification(
+            order.user.email,
+            "Your order is ready for pickup",
+            f"Order #{order.id} is ready at the pickup center.",
+        )
+        return Response(OrderSerializer(order).data)
+
 
 class StripeWebhookView(APIView):
     permission_classes = [permissions.AllowAny]
