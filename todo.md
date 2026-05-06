@@ -19,12 +19,13 @@ Pre-seeded accounts (after `make seed`, password `changeme`):
 
 ## Seller flow gaps
 
-- [ ] **No plant-creation UI.** Add a small form to `dashboard.html` that POSTs to `/api/plants/`. Today the listing form needs a plant id and gardeners have no way to create one through the UI.
-- [ ] **No image upload for listings.** Looks unfinished in the gallery.
+- [x] **No plant-creation UI.** Add a small form to `dashboard.html` that POSTs to `/api/plants/`. Today the listing form needs a plant id and gardeners have no way to create one through the UI.
+- [x] **No image upload for listings.** Looks unfinished in the gallery.
   - Backend: add `image` (or M2M `photos`) to `Listing` + migration; surface in `ListingSerializer`.
   - Frontend: `<input type="file">` on the dashboard create-listing form; render the image in `gallery.js` and `dashboard.js`.
 - [ ] **No fulfillment action.** Seller can see incoming orders but can't update status. Add `POST /api/orders/{id}/mark_ready/` (or similar transitions) and a button in the dashboard order card.
-- [ ] **Dashboard listings table shows "Plant #N" fallback** (`frontend/dashboard.js:78`). Once `plant_name` is on the serializer, render that instead.
+- [x] **Dashboard listings table shows "Plant #N" fallback** (`frontend/dashboard.js:78`). Once `plant_name` is on the serializer, render that instead.
+- [x] **Bonus: more enum mismatches** found during demo-blocker work — `SEED` should be `SEEDS`, `unit` was free-text but model takes `each|gram|lb|bundle`, `status` was uppercase but model uses lowercase. All fixed.
 
 ## Buyer flow gaps
 

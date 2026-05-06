@@ -17,7 +17,11 @@ const renderCarousel = () => {
   const item = carouselItems[carouselIndex];
   label.textContent = `${item.type || "Listing"} (${carouselIndex + 1} of ${carouselItems.length})`;
   const subtitle = item.plant_species ? `<p class="muted">${item.plant_species}</p>` : "";
+  const imageEl = item.image
+    ? `<img class="listing-photo" src="${item.image}" alt="${item.plant_name || "Listing"} photo" loading="lazy" />`
+    : "";
   card.innerHTML = `
+    ${imageEl}
     <h3>${item.plant_name || "Unnamed"}</h3>
     ${subtitle}
     <strong>$${Number(item.price).toFixed(2)}</strong>

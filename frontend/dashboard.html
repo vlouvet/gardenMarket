@@ -41,6 +41,26 @@
         <div id="grower-profile"></div>
       </section>
 
+      <section class="panel" id="create-plant-section">
+        <h2>Add a Plant</h2>
+        <p class="muted">Plants are the catalog entries you turn into listings. Add one before creating a listing for it.</p>
+        <form id="create-plant-form" class="stack">
+          <label>Name <input type="text" name="name" placeholder="e.g. Sungold Tomato" required /></label>
+          <label>Species <input type="text" name="species" placeholder="e.g. Solanum lycopersicum" /></label>
+          <label>Grow method
+            <select name="grow_method">
+              <option value="SOIL">Soil</option>
+              <option value="HYDROPONIC">Hydroponic</option>
+              <option value="AQUAPONIC">Aquaponic</option>
+              <option value="ORGANIC">Organic</option>
+            </select>
+          </label>
+          <label>Description <textarea name="description" rows="2" placeholder="Optional notes for buyers"></textarea></label>
+          <button class="button primary" type="submit">Add plant</button>
+          <p id="plant-message" class="message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
       <section class="panel" id="create-listing-section">
         <h2>Create Listing</h2>
         <form id="create-listing-form" class="stack">
@@ -52,16 +72,24 @@
           </label>
           <label>Type
             <select name="type" required>
-              <option value="SEED">Seed</option>
+              <option value="SEEDS">Seeds</option>
               <option value="CLIPPING">Clipping</option>
               <option value="PRODUCE">Produce</option>
             </select>
           </label>
-          <label>Unit <input type="text" name="unit" placeholder="e.g. pack, pint, bundle" required /></label>
+          <label>Unit
+            <select name="unit" required>
+              <option value="each">Each</option>
+              <option value="gram">Gram</option>
+              <option value="lb">Pound (lb)</option>
+              <option value="bundle">Bundle</option>
+            </select>
+          </label>
           <label>Price <input type="number" name="price" step="0.01" min="0" required /></label>
           <label>Quantity available <input type="number" name="quantity_available" min="0" required /></label>
           <label>Pickup window <input type="text" name="pickup_window" placeholder="e.g. Sat 9-12" /></label>
           <label>Pickup days <input type="text" name="pickup_days" placeholder="e.g. Saturday, Sunday" /></label>
+          <label>Photo (optional) <input type="file" name="image" accept="image/*" /></label>
           <button class="button primary" type="submit">Create listing</button>
           <p id="listing-message" class="message" role="status" aria-live="polite"></p>
         </form>

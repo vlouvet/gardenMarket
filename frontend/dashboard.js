@@ -2,6 +2,7 @@ import { request, requireAuth, showLoading, hideLoading, showError, setMessage }
 
 let myPlants = [];
 let myListings = [];
+let myGardenerProfileId = null;
 
 const initDashboard = async () => {
   if (!requireAuth()) return;
@@ -13,6 +14,8 @@ const initDashboard = async () => {
   const plantSelect = document.getElementById("plant-select");
   const createForm = document.getElementById("create-listing-form");
   const listingMsg = document.getElementById("listing-message");
+  const createPlantForm = document.getElementById("create-plant-form");
+  const plantMsg = document.getElementById("plant-message");
   const saveBtn = document.getElementById("save-listings-btn");
   const saveMsg = document.getElementById("listings-save-message");
 
@@ -48,6 +51,7 @@ const initDashboard = async () => {
 
     // Grower profile
     const profile = Array.isArray(gardeners) ? gardeners[0] : gardeners;
+    myGardenerProfileId = profile?.id ?? null;
     if (profile && profileEl) {
       profileEl.innerHTML = `
         <p>Bio: ${profile.bio || "Not set"}</p>
@@ -77,13 +81,15 @@ const initDashboard = async () => {
               .map(
                 (l) => `
               <div class="listing-row" data-id="${l.id}">
+                ${l.image ? `<img class="listing-thumb" src="${l.image}" alt="${l.plant_name || "Listing"} photo" loading="lazy" />` : ""}
                 <strong>${l.plant_name || myPlants.find((p) => p.id === l.plant)?.name || `Plant #${l.plant}`}</strong>
                 <label>Price <input type="number" step="0.01" name="price" value="${l.price}" /></label>
                 <label>Qty <input type="number" name="quantity_available" value="${l.quantity_available}" /></label>
                 <label>Status
                   <select name="status">
-                    <option value="ACTIVE"${l.status === "ACTIVE" ? " selected" : ""}>Active</option>
-                    <option value="PAUSED"${l.status === "PAUSED" ? " selected" : ""}>Paused</option>
+                    <option value="active"${l.status === "active" ? " selected" : ""}>Active</option>
+                    <option value="paused"${l.status === "paused" ? " selected" : ""}>Paused</option>
+                    <option value="sold_out"${l.status === "sold_out" ? " selected" : ""}>Sold out</option>
                   </select>
                 </label>
               </div>
@@ -122,6 +128,46 @@ const initDashboard = async () => {
     }
   }
 
+  // Create plant
+  if (createPlantForm) {
+    createPlantForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const submitBtn = createPlantForm.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Adding...";
+
+      if (!myGardenerProfileId) {
+        showError(createPlantForm.parentElement, "Could not find your gardener profile. Refresh and try again.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Add plant";
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(createPlantForm).entries());
+      data.gardener = myGardenerProfileId;
+      // Drop empty optional fields so the serializer sees blanks, not nulls.
+      if (!data.grow_method) delete data.grow_method;
+      if (!data.species) delete data.species;
+      if (!data.description) delete data.description;
+
+      try {
+        await request("/api/plants/", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        setMessage(plantMsg, `Plant "${data.name}" added.`);
+        createPlantForm.reset();
+        initDashboard();
+      } catch (error) {
+        showError(createPlantForm.parentElement, error.message);
+        setMessage(plantMsg, error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Add plant";
+      }
+    });
+  }
+
   // Create listing
   if (createForm) {
     createForm.addEventListener("submit", async (event) => {
@@ -130,22 +176,37 @@ const initDashboard = async () => {
       submitBtn.disabled = true;
       submitBtn.textContent = "Creating...";
 
-      const data = Object.fromEntries(new FormData(createForm).entries());
-      if (!data.plant) {
+      const formData = new FormData(createForm);
+      const plantValue = formData.get("plant");
+      if (!plantValue) {
         showError(createForm.parentElement, "Please select a plant.");
         submitBtn.disabled = false;
         submitBtn.textContent = "Create listing";
         return;
       }
-      data.plant = Number(data.plant);
-      data.price = data.price;
-      data.quantity_available = Number(data.quantity_available);
+
+      const imageFile = formData.get("image");
+      const hasImage = imageFile && imageFile instanceof File && imageFile.size > 0;
+      // If no image was selected, drop the empty file entry so the backend
+      // doesn't reject "" as an image, and post JSON for compactness.
+      if (!hasImage) formData.delete("image");
 
       try {
-        await request("/api/listings/", {
-          method: "POST",
-          body: JSON.stringify(data),
-        });
+        if (hasImage) {
+          await request("/api/listings/", {
+            method: "POST",
+            body: formData,
+            multipart: true,
+          });
+        } else {
+          const data = Object.fromEntries(formData.entries());
+          data.plant = Number(data.plant);
+          data.quantity_available = Number(data.quantity_available);
+          await request("/api/listings/", {
+            method: "POST",
+            body: JSON.stringify(data),
+          });
+        }
         setMessage(listingMsg, "Listing created!");
         createForm.reset();
         initDashboard();

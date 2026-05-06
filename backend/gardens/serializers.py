@@ -51,6 +51,7 @@ class ListingSerializer(serializers.ModelSerializer):
             "is_hidden",
             "pickup_window",
             "pickup_days",
+            "image",
             "created_at",
             "in_stock",
             "distance_miles",
