@@ -44,10 +44,15 @@ const loadCart = async () => {
           <div class="cart-item panel">
             <div class="cart-item-info">
               <h3>${name}</h3>
-              <p>${type}${unit ? ` &middot; ${unit}` : ""} &middot; $${price.toFixed(2)} &times; ${item.quantity}</p>
+              <p>${type}${unit ? ` &middot; ${unit}` : ""} &middot; $${price.toFixed(2)} ea.</p>
               <strong>$${lineTotal.toFixed(2)}</strong>
             </div>
-            <button class="button ghost" data-cart-item="${item.id}">Remove</button>
+            <div class="cart-item-controls">
+              <label class="cart-qty">Qty
+                <input type="number" min="1" value="${item.quantity}" data-cart-qty="${item.id}" />
+              </label>
+              <button class="button ghost" data-cart-item="${item.id}">Remove</button>
+            </div>
           </div>
         `;
       })
@@ -66,6 +71,28 @@ const loadCart = async () => {
         } catch (error) {
           btn.disabled = false;
           btn.textContent = "Remove";
+          showError(container, error.message);
+        }
+      });
+    });
+
+    container.querySelectorAll("[data-cart-qty]").forEach((input) => {
+      input.addEventListener("change", async () => {
+        const id = input.dataset.cartQty;
+        const next = Number(input.value);
+        if (!Number.isFinite(next) || next < 1) {
+          input.value = 1;
+          return;
+        }
+        input.disabled = true;
+        try {
+          await request(`/api/cart/${id}/`, {
+            method: "PATCH",
+            body: JSON.stringify({ quantity: next }),
+          });
+          loadCart();
+        } catch (error) {
+          input.disabled = false;
           showError(container, error.message);
         }
       });

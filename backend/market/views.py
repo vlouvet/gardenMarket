@@ -42,6 +42,25 @@ class CartViewSet(viewsets.ViewSet):
         CartItem.objects.filter(cart=cart, pk=pk).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    def partial_update(self, request, pk=None):
+        cart, _created = Cart.objects.get_or_create(user=request.user)
+        item = CartItem.objects.filter(cart=cart, pk=pk).first()
+        if item is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        quantity = request.data.get("quantity")
+        if quantity is None:
+            return Response({"detail": "quantity required"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            quantity = int(quantity)
+        except (TypeError, ValueError):
+            return Response({"detail": "quantity must be an integer"}, status=status.HTTP_400_BAD_REQUEST)
+        if quantity < 1:
+            item.delete()
+        else:
+            item.quantity = quantity
+            item.save(update_fields=["quantity"])
+        return Response(CartSerializer(cart).data)
+
 
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer

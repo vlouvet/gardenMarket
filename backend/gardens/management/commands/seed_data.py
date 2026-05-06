@@ -1,11 +1,15 @@
+import io
 import random
 from decimal import Decimal
 
+from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
+from PIL import Image, ImageDraw
 
 from accounts.models import Profile, User
 from gardens.models import GardenerProfile, Listing, PlantProfile
 from logistics.models import DistributionCenter
+from mediahub.models import Photo, Post
 
 
 PLANTS = [
@@ -82,6 +86,45 @@ PRODUCE_ITEMS = [
 CLIPPING_ITEMS = [
     "Rosemary Cutting", "Mint Runner", "Lavender Stem", "Thyme Sprig", "Sage Cutting",
 ]
+
+# Demo buyer that the documented walkthrough logs in as.
+BUYER_EMAIL = "buyer@example.com"
+BUYER_LAT = 39.7392
+BUYER_LON = -104.9903
+
+# Cream / terracotta / forest green palette matches the icon and CSS.
+PALETTE = [
+    ((45, 111, 101), (246, 241, 234), (215, 106, 77)),   # green / cream / terracotta
+    ((215, 106, 77), (255, 250, 242), (45, 111, 101)),   # terracotta / cream / green
+    ((121, 142, 79), (250, 240, 215), (215, 138, 85)),   # olive / sand / amber
+    ((90, 130, 110), (255, 248, 230), (200, 110, 70)),
+    ((140, 100, 60), (252, 240, 220), (90, 130, 100)),
+]
+
+
+def make_demo_image(seed_int: int, label: str) -> bytes:
+    """Render a small JPG with two color stripes and a centered initial.
+    Just enough variation per listing/post so the gallery looks alive without
+    bundling real stock photos. Pure Pillow primitives; ~3KB per image.
+    """
+    bg, fg, accent = PALETTE[seed_int % len(PALETTE)]
+    img = Image.new("RGB", (640, 480), bg)
+    draw = ImageDraw.Draw(img)
+    # Decorative stripes
+    draw.rectangle((0, 320, 640, 360), fill=accent)
+    draw.rectangle((0, 360, 640, 480), fill=fg)
+    # Big circle accent
+    draw.ellipse((200, 80, 440, 320), fill=fg)
+    draw.ellipse((230, 110, 410, 290), fill=bg)
+    # Initial letter as a chunky block (no font dependency)
+    initial = (label or "?")[0].upper()
+    block_size = 140
+    cx, cy = 320, 200
+    if initial.isalnum():
+        draw.text((cx - 30, cy - 60), initial, fill=accent)
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG", quality=78)
+    return buf.getvalue()
 
 
 class Command(BaseCommand):
@@ -238,3 +281,70 @@ class Command(BaseCommand):
             listing_count += 1
 
         self.stdout.write(self.style.SUCCESS(f"Created {listing_count} listings (100 seeds, 10 produce, 5 clippings)"))
+
+        # Demo buyer with a Denver location, so checkout passes the eligibility
+        # check (validate_order_eligibility requires consumer.profile.lat/lon).
+        buyer, _ = User.objects.get_or_create(
+            email=BUYER_EMAIL,
+            defaults=dict(role=User.Role.CONSUMER, username=BUYER_EMAIL),
+        )
+        buyer.set_password("changeme")
+        buyer.first_name = "Dana"
+        buyer.last_name = "Buyer"
+        buyer.save()
+        buyer_profile, _ = Profile.objects.get_or_create(user=buyer)
+        buyer_profile.address_line1 = "742 Cherry Creek Way"
+        buyer_profile.city = "Denver"
+        buyer_profile.state = "CO"
+        buyer_profile.postal_code = "80202"
+        buyer_profile.country = "US"
+        buyer_profile.lat = BUYER_LAT
+        buyer_profile.lon = BUYER_LON
+        buyer_profile.save()
+        self.stdout.write(self.style.SUCCESS(f"Buyer: {BUYER_EMAIL}"))
+
+        # Attach a generated photo to ~10 listings so the gallery has visuals.
+        # ImageField with null=True stores either NULL or an empty string when
+        # never set, depending on the form path; treat both as missing.
+        from django.db.models import Q
+        sample_listings = list(
+            Listing.objects.select_related("plant")
+            .filter(Q(image__isnull=True) | Q(image=""))
+            .order_by("?")[:10]
+        )
+        for i, listing in enumerate(sample_listings):
+            data = make_demo_image(i, listing.plant.name)
+            listing.image.save(
+                f"seed-{listing.id}.jpg",
+                ContentFile(data),
+                save=True,
+            )
+        self.stdout.write(self.style.SUCCESS(f"Attached photos to {len(sample_listings)} listings"))
+
+        # A handful of community posts so /community.html isn't empty.
+        post_payloads = [
+            ("Basil", "Started 200 basil seedlings under the new LEDs — the cotyledons are huge this batch."),
+            ("Tomato", "Trellised the heirloom tomatoes today. Pinching off suckers really does pay off in week 6."),
+            ("Strawberry", "First strawberries of the season pulled from the high tunnel. Sweet but small — picking again in a week."),
+            ("Lavender", "Lavender hedge in full bloom. Walking the rows mid-morning with the bees is the best part of farming."),
+        ]
+        if gardener_profiles:
+            for i, (plant_name, text) in enumerate(post_payloads):
+                gp = gardener_profiles[i % len(gardener_profiles)]
+                plant = PlantProfile.objects.filter(gardener=gp, name=plant_name).first()
+                post, created = Post.objects.get_or_create(
+                    gardener=gp,
+                    plant=plant,
+                    text=text,
+                )
+                if created:
+                    photo_data = make_demo_image(i + 7, plant_name)
+                    photo = Photo(post=post)
+                    photo.image.save(
+                        f"post-{post.id}.jpg",
+                        ContentFile(photo_data),
+                        save=True,
+                    )
+            self.stdout.write(
+                self.style.SUCCESS(f"Seeded {len(post_payloads)} community posts with photos")
+            )
