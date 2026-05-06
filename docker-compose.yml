@@ -80,12 +80,25 @@ services:
         condition: service_healthy
 
   nginx:
-    image: nginx:alpine
-    volumes:
-      - ./frontend:/usr/share/nginx/html:ro
-      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    image: gardenmarket-frontend
     ports:
       - "8881:80"
+    depends_on:
+      web:
+        condition: service_healthy
+
+  frontend-dev:
+    profiles: ["frontend-dev"]
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "if [ -f package-lock.json ]; then npm ci; else npm install; fi && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5173:5173"
     depends_on:
       web:
         condition: service_healthy

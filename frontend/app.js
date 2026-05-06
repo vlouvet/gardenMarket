@@ -1,11 +1,11 @@
-const API_BASE =
+export const API_BASE =
   document.querySelector('meta[name="api-base"]')?.getAttribute("content") || "";
-const TOKEN_KEY = "gardenmarket_access_token";
-const USER_KEY = "gardenmarket_user";
+export const TOKEN_KEY = "gardenmarket_access_token";
+export const USER_KEY = "gardenmarket_user";
 
 /* ── helpers ─────────────────────────────────────────────────── */
 
-const setMessage = (el, message, tone = "") => {
+export const setMessage = (el, message, tone = "") => {
   if (!el) return;
   el.textContent = message;
   el.dataset.tone = tone;
@@ -13,21 +13,21 @@ const setMessage = (el, message, tone = "") => {
 
 /* ── auth state ──────────────────────────────────────────────── */
 
-const storeToken = (token) => localStorage.setItem(TOKEN_KEY, token);
-const getToken = () => localStorage.getItem(TOKEN_KEY);
+export const storeToken = (token) => localStorage.setItem(TOKEN_KEY, token);
+export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
-const storeUser = (user) => localStorage.setItem(USER_KEY, JSON.stringify(user));
-const getUser = () => {
+export const storeUser = (user) => localStorage.setItem(USER_KEY, JSON.stringify(user));
+export const getUser = () => {
   try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch { return null; }
 };
 
-const logout = () => {
+export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
   window.location.href = "index.html";
 };
 
-const requireAuth = () => {
+export const requireAuth = () => {
   if (!getToken()) {
     window.location.href = "register.html";
     return false;
@@ -40,7 +40,7 @@ const requireAuth = () => {
  * Called on every page load when a token exists. If the token is invalid/expired
  * the API will 401 and we clear credentials and redirect.
  */
-const refreshCurrentUser = async () => {
+export const refreshCurrentUser = async () => {
   const token = getToken();
   if (!token) return null;
   try {
@@ -62,7 +62,7 @@ const refreshCurrentUser = async () => {
 
 /* ── API request wrapper ─────────────────────────────────────── */
 
-const request = async (path, options = {}) => {
+export const request = async (path, options = {}) => {
   const headers = { ...(options.headers || {}) };
   if (!options.multipart) {
     headers["Content-Type"] = "application/json";
@@ -87,12 +87,12 @@ const request = async (path, options = {}) => {
 
 /* ── loading spinner helpers ─────────────────────────────────── */
 
-const showLoading = (container) => {
+export const showLoading = (container) => {
   if (!container) return;
   container.innerHTML = '<div class="loading-spinner" role="status" aria-live="polite" aria-label="Loading"><span></span></div>';
 };
 
-const hideLoading = (container) => {
+export const hideLoading = (container) => {
   if (!container) return;
   const spinner = container.querySelector(".loading-spinner");
   if (spinner) spinner.remove();
@@ -100,7 +100,7 @@ const hideLoading = (container) => {
 
 /* ── error banner helpers ────────────────────────────────────── */
 
-const showError = (container, message) => {
+export const showError = (container, message) => {
   if (!container) return;
   dismissError(container);
   const banner = document.createElement("div");
@@ -111,14 +111,14 @@ const showError = (container, message) => {
   container.prepend(banner);
 };
 
-const dismissError = (container) => {
+export const dismissError = (container) => {
   if (!container) return;
   container.querySelectorAll(".error-banner").forEach((b) => b.remove());
 };
 
 /* ── navigation ──────────────────────────────────────────────── */
 
-const initNav = () => {
+export const initNav = () => {
   const nav = document.querySelector(".nav-links");
   if (!nav) return;
   if (!nav.hasAttribute("aria-label")) nav.setAttribute("aria-label", "Primary");

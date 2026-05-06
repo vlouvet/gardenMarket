@@ -1,3 +1,5 @@
+import { request, requireAuth, logout, showError, dismissError, setMessage } from "./app.js";
+
 const loadProfile = async () => {
   if (!requireAuth()) return;
 

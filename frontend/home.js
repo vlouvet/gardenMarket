@@ -1,3 +1,5 @@
+import { request } from "./app.js";
+
 const loadMetrics = async () => {
   const listingsEl = document.getElementById("metric-listings");
   const centersEl = document.getElementById("metric-centers");

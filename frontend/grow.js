@@ -1,3 +1,5 @@
+import { request, requireAuth, refreshCurrentUser, showError, setMessage, initNav } from "./app.js";
+
 const bindUpgrade = () => {
   const button = document.getElementById("upgrade-button");
   const message = document.getElementById("upgrade-message");

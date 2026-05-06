@@ -2,7 +2,9 @@
 .gitignore
 .github
 
-frontend
+frontend/node_modules
+frontend/dist
+frontend/.vite
 gardenMarket-ios-app
 docs
 todo.md

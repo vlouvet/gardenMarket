@@ -1,3 +1,5 @@
+import { request, requireAuth, showLoading, showError } from "./app.js";
+
 let carouselItems = [];
 let carouselIndex = 0;
 

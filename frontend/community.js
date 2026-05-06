@@ -1,3 +1,5 @@
+import { request, getToken, showLoading, showError, dismissError, setMessage } from "./app.js";
+
 const initCommunity = async () => {
   const feed = document.getElementById("posts-feed");
   const section = document.getElementById("new-post-section");
