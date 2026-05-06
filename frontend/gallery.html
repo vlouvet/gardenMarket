@@ -3,6 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2d6f65" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="GardenMarket" />
+    <meta name="description" content="Local growers, smarter logistics, fresh every week." />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>Produce Gallery | GardenMarket</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,7 +28,7 @@
   <body data-page="gallery">
     <header class="site-header">
       <div class="logo">GardenMarket</div>
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="grow-with-us.html">Grow With Us</a>
         <a href="register.html">Register</a>
@@ -43,23 +53,23 @@
         </label>
       </div>
 
-      <section class="carousel">
+      <section class="carousel" role="region" aria-roledescription="carousel" aria-label="Featured listings">
         <div class="carousel-controls">
-          <button class="button ghost" id="prev-item">Prev</button>
-          <div class="carousel-label" id="carousel-label"></div>
-          <button class="button ghost" id="next-item">Next</button>
+          <button class="button ghost" id="prev-item" type="button" aria-label="Previous listing">Prev</button>
+          <div class="carousel-label" id="carousel-label" aria-live="polite"></div>
+          <button class="button ghost" id="next-item" type="button" aria-label="Next listing">Next</button>
         </div>
-        <div class="carousel-card" id="carousel-card"></div>
+        <div class="carousel-card" id="carousel-card" tabindex="0" aria-live="polite" aria-atomic="true"></div>
       </section>
     </main>
 
     <footer class="site-footer">
       <span>GardenMarket 2026</span>
-      <div class="footer-links">
+      <nav class="footer-links" aria-label="Footer">
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>
         <a href="seller-agreement.html">Seller Agreement</a>
-      </div>
+      </nav>
     </footer>
   </body>
 </html>

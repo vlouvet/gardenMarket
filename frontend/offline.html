@@ -7,13 +7,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="GardenMarket" />
-    <meta name="description" content="Local growers, smarter logistics, fresh every week." />
+    <meta name="description" content="GardenMarket is offline. We'll be back as soon as you reconnect." />
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <title>Privacy | GardenMarket</title>
+    <title>Offline | GardenMarket</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,25 +21,34 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <script defer data-domain="gardenmarket.local" src="https://plausible.io/js/script.js"></script>
   </head>
-  <body>
+  <body data-page="offline">
     <header class="site-header">
       <div class="logo">GardenMarket</div>
       <nav class="nav-links" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="gallery.html">Produce Gallery</a>
-        <a href="register.html">Register</a>
+        <a href="/index.html">Home</a>
       </nav>
     </header>
 
-    <main class="panel" style="margin: 8vh 8vw;">
-      <h1>Privacy Policy</h1>
-      <p>
-        This is a placeholder privacy policy. Replace this with your data handling,
-        retention, and user rights policy before launch.
+    <main class="panel" style="margin: 8vh 8vw; text-align: center;" role="main">
+      <h1>You're offline</h1>
+      <p class="lead">
+        We can't reach the market right now. Check your connection and we'll
+        bring you back to fresh harvests in a moment.
       </p>
-      <p>Last updated: February 7, 2026.</p>
+      <div class="cta-row" style="justify-content: center;">
+        <button class="button primary" type="button" onclick="window.location.reload()">
+          Try again
+        </button>
+        <a class="button ghost" href="/index.html">Go home</a>
+      </div>
+      <p class="muted" style="margin-top: 2rem;">
+        Pages you've already visited may still be available from cache.
+      </p>
     </main>
+
+    <footer class="site-footer">
+      <span>GardenMarket 2026</span>
+    </footer>
   </body>
 </html>

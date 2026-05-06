@@ -26,8 +26,12 @@ const initCommunity = async () => {
       } else {
         feed.innerHTML = posts
           .map((post) => {
+            const subject = post.plant_name || post.plant || "community update";
             const postPhotos = (photosByPost[post.id] || [])
-              .map((ph) => `<img class="post-photo" src="${ph.image}" alt="Post photo" />`)
+              .map((ph, i) => {
+                const altSrc = ph.alt_text || `Photo ${i + 1} of ${subject}`;
+                return `<img class="post-photo" src="${ph.image}" alt="${altSrc}" loading="lazy" />`;
+              })
               .join("");
             return `
               <article class="panel post-card">

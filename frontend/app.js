@@ -89,7 +89,7 @@ const request = async (path, options = {}) => {
 
 const showLoading = (container) => {
   if (!container) return;
-  container.innerHTML = '<div class="loading-spinner" aria-label="Loading"><span></span></div>';
+  container.innerHTML = '<div class="loading-spinner" role="status" aria-live="polite" aria-label="Loading"><span></span></div>';
 };
 
 const hideLoading = (container) => {
@@ -121,6 +121,7 @@ const dismissError = (container) => {
 const initNav = () => {
   const nav = document.querySelector(".nav-links");
   if (!nav) return;
+  if (!nav.hasAttribute("aria-label")) nav.setAttribute("aria-label", "Primary");
   const loggedIn = !!getToken();
   const user = getUser();
   const role = user?.role || "";
