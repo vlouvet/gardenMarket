@@ -136,7 +136,7 @@ export const initNav = () => {
   if (loggedIn) {
     links.push('<a href="cart.html">Cart</a>');
     links.push('<a href="orders.html">Orders</a>');
-    if (role === "GROWER" || role === "ADMIN") {
+    if (role === "GARDENER" || role === "ADMIN") {
       links.push('<a href="dashboard.html">Dashboard</a>');
     }
     links.push('<a href="profile.html">Profile</a>');

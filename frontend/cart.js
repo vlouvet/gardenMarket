@@ -34,14 +34,17 @@ const loadCart = async () => {
     container.innerHTML = items
       .map((item) => {
         const listing = listingCache[item.listing] || {};
-        const price = Number(listing.price) || 0;
+        const price = Number(item.listing_price ?? listing.price) || 0;
+        const name = item.plant_name || listing.plant_name || `Listing #${item.listing}`;
+        const type = item.listing_type || listing.type || "";
+        const unit = item.listing_unit || listing.unit || "";
         const lineTotal = price * item.quantity;
         total += lineTotal;
         return `
           <div class="cart-item panel">
             <div class="cart-item-info">
-              <h3>${listing.plant || `Listing #${item.listing}`}</h3>
-              <p>${listing.type || ""} &middot; $${price.toFixed(2)} &times; ${item.quantity}</p>
+              <h3>${name}</h3>
+              <p>${type}${unit ? ` &middot; ${unit}` : ""} &middot; $${price.toFixed(2)} &times; ${item.quantity}</p>
               <strong>$${lineTotal.toFixed(2)}</strong>
             </div>
             <button class="button ghost" data-cart-item="${item.id}">Remove</button>

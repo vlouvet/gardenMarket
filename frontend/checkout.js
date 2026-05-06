@@ -30,7 +30,9 @@ const initCheckout = async () => {
       summary.innerHTML = items
         .map((item) => {
           const l = lookup[item.listing] || {};
-          return `<p>${l.plant || `#${item.listing}`} &times; ${item.quantity} &mdash; $${(Number(l.price || 0) * item.quantity).toFixed(2)}</p>`;
+          const name = item.plant_name || l.plant_name || `Listing #${item.listing}`;
+          const price = Number(item.listing_price ?? l.price ?? 0);
+          return `<p>${name} &times; ${item.quantity} &mdash; $${(price * item.quantity).toFixed(2)}</p>`;
         })
         .join("");
     }

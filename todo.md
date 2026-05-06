@@ -1,54 +1,57 @@
-# GardenMarket TODO
+# GardenMarket TODO — Demo prep
 
-## Frontend — Docker / Infrastructure Integration
+Goal: walk through the app live as a **seller (gardener)** and a **buyer** in
+one continuous session, with no broken UX or "Listing #5" placeholders.
 
-- [x] Add an nginx service to docker-compose.yml to serve the static frontend and reverse-proxy `/api/` to the Django backend
-- [x] Make `API_BASE` in app.js configurable (inject at build time or read from a `<meta>` tag) so the frontend can target different backend URLs per environment
-- [x] Fix service-worker.js registration path — currently hardcoded to `/frontend/service-worker.js`, will break when served from nginx at `/`
-- [x] Update service-worker.js cache list to match the actual served paths (currently assumes `/frontend/` prefix)
+Pre-seeded accounts (after `make seed`, password `changeme`):
+- `gardener@example.com`, `grower2@example.com`, `grower3@example.com` — role GARDENER
+- *No buyer account yet — see "Demo content" below*
 
-## Frontend — API Integration
+## Demo-blocking bugs (fix first)
 
-- [x] Replace hardcoded carousel items in app.js with a fetch to `GET /api/listings/` so the gallery shows real data
-- [x] Replace hardcoded hero metrics (128 listings, 6 hubs, 72 miles) with live counts from the API
-- [x] Add a shopping-cart page that calls `POST /api/cart/` and displays current cart items
-- [x] Add an order-creation flow that calls `POST /api/orders/` after selecting a distribution center
-- [x] Add an order-history / tracking page that calls `GET /api/orders/`
-- [x] Add a user profile page that fetches and updates `GET/PATCH /api/accounts/profile/`
-- [x] Add a grower dashboard page for managing listings (`GET/POST /api/listings/`, `GET /api/orders/gardener/`)
-- [x] Integrate media uploads — allow growers to create posts and upload photos via `/api/posts/` and `/api/photos/`
-- [x] Show distribution center locations fetched from `GET /api/centers/`
+- [x] **Role enum mismatch.** Frontend checks for `"GROWER"`, backend uses `GARDENER`. Seller cannot reach the dashboard right now.
+  - `frontend/dashboard.js:25` — change `me.role !== "GROWER"` → `"GARDENER"`
+  - `frontend/app.js:139` — change `role === "GROWER"` → `"GARDENER"`
+- [x] **Listing type mismatch.** Form sends `CLONE`, backend expects `CLIPPING` (`backend/gardens/models.py:39`). Submit will 400.
+  - `frontend/dashboard.html:56` — `<option value="CLONE">` → `"CLIPPING"`
+  - `frontend/gallery.html:49` — same change in the filter dropdown
+- [x] **Listings show only IDs, not plant names.** Add `plant_name` (or nested `plant`) to `ListingSerializer` (`backend/gardens/serializers.py:26`). Removes "Listing #5" UX everywhere it's referenced (`frontend/orders.js:29`, `frontend/checkout.js:33`, `frontend/gallery.js:20`, `frontend/dashboard.js:78`).
 
-## Frontend — Auth & UX
+## Seller flow gaps
 
-- [x] Persist login state across page loads — redirect unauthenticated users away from protected pages
-- [x] Show/hide navigation links based on auth state and user role (consumer vs gardener vs admin)
-- [x] Add loading spinners or skeleton screens while API calls are in flight
-- [x] Add proper error banners for failed API calls (network errors, 4xx, 5xx)
-- [x] Add form validation feedback (inline errors, password-strength hints)
-- [x] Add logout functionality (clear token, redirect to home)
+- [ ] **No plant-creation UI.** Add a small form to `dashboard.html` that POSTs to `/api/plants/`. Today the listing form needs a plant id and gardeners have no way to create one through the UI.
+- [ ] **No image upload for listings.** Looks unfinished in the gallery.
+  - Backend: add `image` (or M2M `photos`) to `Listing` + migration; surface in `ListingSerializer`.
+  - Frontend: `<input type="file">` on the dashboard create-listing form; render the image in `gallery.js` and `dashboard.js`.
+- [ ] **No fulfillment action.** Seller can see incoming orders but can't update status. Add `POST /api/orders/{id}/mark_ready/` (or similar transitions) and a button in the dashboard order card.
+- [ ] **Dashboard listings table shows "Plant #N" fallback** (`frontend/dashboard.js:78`). Once `plant_name` is on the serializer, render that instead.
 
-## Frontend - images and assets
-- [x] create app icon and other required image asset files
+## Buyer flow gaps
 
-## Frontend — PWA & Offline
+- [ ] **Centers page shows "?" capacity** until a date filter is applied (`backend/logistics/views.py:38`, surfaced at `frontend/centers.js:37`). Default `remaining_capacity` to today's date so the first paint is informative.
+- [ ] **Orders page is sparse.** Buyer should see plant name + pickup window + check-in code in one view (`frontend/orders.html`, `frontend/orders.js`). Today they see "Order #4 — Listing #5".
+- [ ] **No way to clear or update a cart item** before checkout. Add delete + quantity edit on `cart.html`.
 
-- [x] Add a web app manifest (manifest.json) with app name, icons, and theme color
-- [x] Add PWA meta tags to all HTML pages (`<meta name="theme-color">`, Apple touch icon, etc.)
-- [x] Add an offline fallback page shown when the network is unavailable
-- [x] Implement cache-busting for the service worker when static assets change
+## Demo content
 
-## Frontend — Quality & Accessibility
+- [ ] Extend `backend/gardens/management/commands/seed_data.py`:
+  - Create a seeded buyer: `buyer@example.com / changeme` (role CONSUMER) so demo logins exist for both roles.
+  - Create 3–5 community posts with photos via `mediahub` so `community.html` isn't empty.
+  - Attach a representative photo to a handful of listings (after the listing image field exists).
+- [ ] Commit ~10 stock plant/produce photos under a `backend/media/seed/` directory and seed them in via the command. 512×512 JPGs are fine.
 
-- [x] Add ARIA labels and roles to interactive elements (carousel, forms, nav)
-- [x] Ensure all images have descriptive alt text
-- [x] Add keyboard navigation support for the gallery carousel
-- [x] Add a build step (e.g. Vite) for minification, bundling, and cache-busted filenames
-- [x] Add basic frontend tests (smoke tests for page load, form submission)
+## Demo logistics
 
+- [ ] Add `make demo-reset`: `docker compose down -v && docker compose up -d && sleep 10 && make migrate && make seed`. One command to start a fresh demo from scratch.
+- [ ] Write `docs/demo-script.md` with the click-by-click:
+  1. Login as `gardener@example.com`. From the dashboard: create a plant, create a listing with a photo, view profile.
+  2. Logout. Register or login as `buyer@example.com`. Browse the gallery, filter to seeds, add to cart, pick a Denver pickup center, check out.
+  3. Logout. Login back as the gardener. Confirm the new order appears with the buyer's plant name and quantity, mark it ready.
+- [ ] Dry-run the script on a clean stack (`make demo-reset && open http://localhost:8881`) and capture any new rough edges as follow-up items here.
 
-## Frontend — Content & Compliance
+## Nice-to-have (after the demo lands)
 
-- [x] Write real content for terms.html (currently a placeholder)
-- [x] Write real content for privacy.html (currently a placeholder)
-- [x] Write real content for seller-agreement.html (currently a placeholder)
+- [ ] Replace the auto-rotating gallery carousel with a 3-column grid; the carousel is overkill for the current density.
+- [ ] Wire real Stripe (test keys) so checkout flows through `payment_intents` instead of `mock_pay`.
+- [ ] Add a buyer review/rating endpoint after order completion so the gardener `rating_avg` / `rating_count` fields actually populate.
+- [ ] Document the `ProfileView` permission policy (`backend/accounts/views.py:22`) — currently relies on project default, would benefit from explicit `permission_classes = [IsAuthenticated]`.

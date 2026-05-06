@@ -22,8 +22,8 @@ const initDashboard = async () => {
   try {
     const me = await request("/api/accounts/me/");
     if (status) hideLoading(status);
-    if (me.role !== "GROWER") {
-      if (status) status.textContent = "You need grower access. Visit Grow With Us to upgrade.";
+    if (me.role !== "GARDENER") {
+      if (status) status.textContent = "You need gardener access. Visit Grow With Us to upgrade.";
       document.getElementById("grower-profile-section")?.remove();
       document.getElementById("create-listing-section")?.remove();
       return;
@@ -77,7 +77,7 @@ const initDashboard = async () => {
               .map(
                 (l) => `
               <div class="listing-row" data-id="${l.id}">
-                <strong>${myPlants.find((p) => p.id === l.plant)?.name || `Plant #${l.plant}`}</strong>
+                <strong>${l.plant_name || myPlants.find((p) => p.id === l.plant)?.name || `Plant #${l.plant}`}</strong>
                 <label>Price <input type="number" step="0.01" name="price" value="${l.price}" /></label>
                 <label>Qty <input type="number" name="quantity_available" value="${l.quantity_available}" /></label>
                 <label>Status
@@ -108,7 +108,7 @@ const initDashboard = async () => {
               <h3>Order #${o.id}</h3>
               <span class="pill">${o.status}</span>
               <p>Pickup: ${o.pickup_date || "--"} &middot; ${o.pickup_window || "--"}</p>
-              <ul>${(o.items || []).map((i) => `<li>Listing #${i.listing} &times; ${i.quantity}</li>`).join("")}</ul>
+              <ul>${(o.items || []).map((i) => `<li>${i.plant_name || `Listing #${i.listing}`} &times; ${i.quantity}</li>`).join("")}</ul>
             </div>
           `
           )

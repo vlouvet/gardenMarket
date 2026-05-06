@@ -26,7 +26,14 @@ const loadOrders = async () => {
     container.innerHTML = orders
       .map((o) => {
         const items = (o.items || [])
-          .map((i) => `<li>Listing #${i.listing} &times; ${i.quantity}</li>`)
+          .map((i) => {
+            const name = i.plant_name || `Listing #${i.listing}`;
+            const unit = i.listing_unit ? ` (${i.listing_unit})` : "";
+            const price = i.price_at_purchase
+              ? ` &mdash; $${Number(i.price_at_purchase).toFixed(2)} ea.`
+              : "";
+            return `<li>${name}${unit} &times; ${i.quantity}${price}</li>`;
+          })
           .join("");
         const statusClass = STATUS_COLORS[o.status] || "";
         return `
