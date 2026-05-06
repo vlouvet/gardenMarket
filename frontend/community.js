@@ -1,3 +1,5 @@
+import { request, getToken, showLoading, showError, dismissError, setMessage } from "./app.js";
+
 const initCommunity = async () => {
   const feed = document.getElementById("posts-feed");
   const section = document.getElementById("new-post-section");
@@ -9,7 +11,7 @@ const initCommunity = async () => {
 
   // Load posts
   if (feed) {
-    feed.innerHTML = "<p>Loading posts...</p>";
+    showLoading(feed);
     try {
       const [posts, photos] = await Promise.all([
         request("/api/posts/"),
@@ -26,8 +28,12 @@ const initCommunity = async () => {
       } else {
         feed.innerHTML = posts
           .map((post) => {
+            const subject = post.plant_name || post.plant || "community update";
             const postPhotos = (photosByPost[post.id] || [])
-              .map((ph) => `<img class="post-photo" src="${ph.image}" alt="Post photo" />`)
+              .map((ph, i) => {
+                const altSrc = ph.alt_text || `Photo ${i + 1} of ${subject}`;
+                return `<img class="post-photo" src="${ph.image}" alt="${altSrc}" loading="lazy" />`;
+              })
               .join("");
             return `
               <article class="panel post-card">
@@ -39,8 +45,9 @@ const initCommunity = async () => {
           })
           .join("");
       }
-    } catch {
-      feed.innerHTML = "<p>Could not load posts.</p>";
+    } catch (error) {
+      feed.innerHTML = "";
+      showError(feed, `Could not load posts: ${error.message}`);
     }
   }
 
@@ -48,10 +55,22 @@ const initCommunity = async () => {
   if (form) {
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      const submitBtn = form.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Publishing...";
+      dismissError(form.parentElement);
+
       const data = new FormData(form);
       const plantValue = data.get("plant");
       const text = data.get("text");
       const imageFile = data.get("image");
+
+      if (!text || !text.trim()) {
+        showError(form.parentElement, "Post text is required.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Post";
+        return;
+      }
 
       try {
         const post = await request("/api/posts/", {
@@ -76,7 +95,11 @@ const initCommunity = async () => {
         // Reload feed
         initCommunity();
       } catch (error) {
+        showError(form.parentElement, error.message);
         setMessage(message, error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Post";
       }
     });
   }

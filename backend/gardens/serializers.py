@@ -24,6 +24,10 @@ class PlantProfileSerializer(serializers.ModelSerializer):
 
 
 class ListingSerializer(serializers.ModelSerializer):
+    plant_name = serializers.CharField(source="plant.name", read_only=True)
+    plant_species = serializers.CharField(source="plant.species", read_only=True)
+    plant_grow_method = serializers.CharField(source="plant.grow_method", read_only=True)
+    grower_name = serializers.CharField(source="plant.gardener.user.email", read_only=True)
     in_stock = serializers.SerializerMethodField()
     distance_miles = serializers.SerializerMethodField()
     grown_within_miles = serializers.SerializerMethodField()
@@ -35,6 +39,10 @@ class ListingSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "plant",
+            "plant_name",
+            "plant_species",
+            "plant_grow_method",
+            "grower_name",
             "type",
             "unit",
             "price",
@@ -43,6 +51,7 @@ class ListingSerializer(serializers.ModelSerializer):
             "is_hidden",
             "pickup_window",
             "pickup_days",
+            "image",
             "created_at",
             "in_stock",
             "distance_miles",

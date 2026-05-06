@@ -4,9 +4,24 @@ from market.models import Cart, CartItem, Order, OrderItem
 
 
 class CartItemSerializer(serializers.ModelSerializer):
+    plant_name = serializers.CharField(source="listing.plant.name", read_only=True)
+    listing_type = serializers.CharField(source="listing.type", read_only=True)
+    listing_unit = serializers.CharField(source="listing.unit", read_only=True)
+    listing_price = serializers.DecimalField(
+        source="listing.price", max_digits=10, decimal_places=2, read_only=True,
+    )
+
     class Meta:
         model = CartItem
-        fields = ("id", "listing", "quantity")
+        fields = (
+            "id",
+            "listing",
+            "plant_name",
+            "listing_type",
+            "listing_unit",
+            "listing_price",
+            "quantity",
+        )
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -18,9 +33,21 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    plant_name = serializers.CharField(source="listing.plant.name", read_only=True)
+    listing_type = serializers.CharField(source="listing.type", read_only=True)
+    listing_unit = serializers.CharField(source="listing.unit", read_only=True)
+
     class Meta:
         model = OrderItem
-        fields = ("id", "listing", "quantity", "price_at_purchase")
+        fields = (
+            "id",
+            "listing",
+            "plant_name",
+            "listing_type",
+            "listing_unit",
+            "quantity",
+            "price_at_purchase",
+        )
 
 
 class OrderSerializer(serializers.ModelSerializer):

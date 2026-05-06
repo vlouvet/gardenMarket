@@ -35,22 +35,21 @@ class CenterListView(generics.ListAPIView):
                     and center.lon is not None
                     and haversine_miles(lat, lon, center.lat, center.lon) <= 100
                 ]
-        if date_value:
-            remaining_map = {}
-            try:
-                target_date = date_cls.fromisoformat(date_value)
-            except ValueError:
-                target_date = None
-            if target_date:
-                for center in queryset:
-                    schedule = CenterSchedule.objects.filter(center=center, date=target_date).first()
-                    capacity = schedule.capacity_override if schedule and schedule.capacity_override else center.capacity_per_day
-                    used = Order.objects.filter(
-                        distribution_center=center, pickup_date=target_date
-                    ).count()
-                    remaining_map[center.id] = max(capacity - used, 0)
-            self.serializer_class = DistributionCenterSerializer
-            self._remaining_map = remaining_map
+        # Always populate remaining_capacity. Default to today when no date
+        # was passed so the centers list is informative on first paint.
+        try:
+            target_date = date_cls.fromisoformat(date_value) if date_value else date_cls.today()
+        except ValueError:
+            target_date = date_cls.today()
+        remaining_map = {}
+        for center in queryset:
+            schedule = CenterSchedule.objects.filter(center=center, date=target_date).first()
+            capacity = schedule.capacity_override if schedule and schedule.capacity_override else center.capacity_per_day
+            used = Order.objects.filter(
+                distribution_center=center, pickup_date=target_date
+            ).count()
+            remaining_map[center.id] = max(capacity - used, 0)
+        self._remaining_map = remaining_map
         return queryset
 
     def get_serializer_context(self):

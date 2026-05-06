@@ -42,6 +42,25 @@ class CartViewSet(viewsets.ViewSet):
         CartItem.objects.filter(cart=cart, pk=pk).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    def partial_update(self, request, pk=None):
+        cart, _created = Cart.objects.get_or_create(user=request.user)
+        item = CartItem.objects.filter(cart=cart, pk=pk).first()
+        if item is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        quantity = request.data.get("quantity")
+        if quantity is None:
+            return Response({"detail": "quantity required"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            quantity = int(quantity)
+        except (TypeError, ValueError):
+            return Response({"detail": "quantity must be an integer"}, status=status.HTTP_400_BAD_REQUEST)
+        if quantity < 1:
+            item.delete()
+        else:
+            item.quantity = quantity
+            item.save(update_fields=["quantity"])
+        return Response(CartSerializer(cart).data)
+
 
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
@@ -210,6 +229,34 @@ class OrderViewSet(viewsets.ModelViewSet):
     def gardener(self, request):
         orders = Order.objects.filter(items__listing__plant__gardener__user=request.user).distinct()
         return Response(OrderSerializer(orders, many=True).data)
+
+    @action(detail=True, methods=["post"], permission_classes=[permissions.IsAuthenticated, IsGardener])
+    def mark_ready(self, request, pk=None):
+        order = Order.objects.filter(
+            pk=pk,
+            items__listing__plant__gardener__user=request.user,
+        ).distinct().first()
+        if order is None:
+            return Response(
+                {"detail": "Order not found or not owned by your listings."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        if order.status not in (
+            Order.Status.SCHEDULED,
+            Order.Status.AWAITING_PICKUP_SCHEDULING,
+        ):
+            return Response(
+                {"detail": f"Cannot mark ready from status {order.status}."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        order.status = Order.Status.READY_FOR_PICKUP
+        order.save(update_fields=["status"])
+        send_order_notification(
+            order.user.email,
+            "Your order is ready for pickup",
+            f"Order #{order.id} is ready at the pickup center.",
+        )
+        return Response(OrderSerializer(order).data)
 
 
 class StripeWebhookView(APIView):

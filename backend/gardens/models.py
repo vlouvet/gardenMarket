@@ -60,6 +60,7 @@ class Listing(models.Model):
     is_hidden = models.BooleanField(default=False)
     pickup_window = models.CharField(max_length=100, blank=True)
     pickup_days = models.JSONField(default=list, blank=True)
+    image = models.ImageField(upload_to="listings/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

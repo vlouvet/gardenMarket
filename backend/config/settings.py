@@ -117,6 +117,7 @@ CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", os.getenv("REDIS_URL", "redis
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", os.getenv("REDIS_URL", "redis://redis:6379/2"))
 
 S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL")
+S3_PUBLIC_ENDPOINT_URL = os.getenv("S3_PUBLIC_ENDPOINT_URL", S3_ENDPOINT_URL)
 S3_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
 S3_SECRET_KEY = os.getenv("S3_SECRET_KEY")
 S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
@@ -132,15 +133,28 @@ STORAGES = {
 }
 
 if S3_ENDPOINT_URL and S3_ACCESS_KEY and S3_SECRET_KEY and S3_BUCKET_NAME:
+    s3_options = {
+        "access_key": S3_ACCESS_KEY,
+        "secret_key": S3_SECRET_KEY,
+        "bucket_name": S3_BUCKET_NAME,
+        "region_name": S3_REGION_NAME,
+        "endpoint_url": S3_ENDPOINT_URL,
+    }
+    # When the public-facing endpoint differs from the in-network one (e.g.
+    # MinIO is reachable as http://minio:9000 from web but http://localhost:9000
+    # from the browser), expose URLs via custom_domain so default_storage.url()
+    # returns links the browser can actually fetch.
+    if S3_PUBLIC_ENDPOINT_URL and S3_PUBLIC_ENDPOINT_URL != S3_ENDPOINT_URL:
+        from urllib.parse import urlparse
+
+        parsed = urlparse(S3_PUBLIC_ENDPOINT_URL)
+        s3_options["custom_domain"] = f"{parsed.netloc}/{S3_BUCKET_NAME}"
+        s3_options["url_protocol"] = f"{parsed.scheme}:"
+        # Public bucket via mc anonymous set download — no presigned URLs.
+        s3_options["querystring_auth"] = False
     STORAGES["default"] = {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-        "OPTIONS": {
-            "access_key": S3_ACCESS_KEY,
-            "secret_key": S3_SECRET_KEY,
-            "bucket_name": S3_BUCKET_NAME,
-            "region_name": S3_REGION_NAME,
-            "endpoint_url": S3_ENDPOINT_URL,
-        },
+        "OPTIONS": s3_options,
     }
 
 LOGISTICS_GEO_PROVIDER = os.getenv("GEOCODING_PROVIDER", "nominatim")

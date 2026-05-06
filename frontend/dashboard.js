@@ -1,5 +1,8 @@
+import { request, requireAuth, showLoading, hideLoading, showError, setMessage } from "./app.js";
+
 let myPlants = [];
 let myListings = [];
+let myGardenerProfileId = null;
 
 const initDashboard = async () => {
   if (!requireAuth()) return;
@@ -11,24 +14,33 @@ const initDashboard = async () => {
   const plantSelect = document.getElementById("plant-select");
   const createForm = document.getElementById("create-listing-form");
   const listingMsg = document.getElementById("listing-message");
+  const createPlantForm = document.getElementById("create-plant-form");
+  const plantMsg = document.getElementById("plant-message");
   const saveBtn = document.getElementById("save-listings-btn");
   const saveMsg = document.getElementById("listings-save-message");
+
+  if (status) showLoading(status);
 
   // Check role
   try {
     const me = await request("/api/accounts/me/");
-    if (me.role !== "GROWER") {
-      if (status) status.textContent = "You need grower access. Visit Grow With Us to upgrade.";
+    if (status) hideLoading(status);
+    if (me.role !== "GARDENER") {
+      if (status) status.textContent = "You need gardener access. Visit Grow With Us to upgrade.";
       document.getElementById("grower-profile-section")?.remove();
       document.getElementById("create-listing-section")?.remove();
       return;
     }
   } catch (error) {
-    if (status) status.textContent = error.message;
+    if (status) {
+      hideLoading(status);
+      showError(status, error.message);
+    }
     return;
   }
 
   // Load grower data in parallel
+  if (listingsTable) showLoading(listingsTable);
   try {
     const [gardeners, plants, listings, orders] = await Promise.all([
       request("/api/gardeners/").catch(() => []),
@@ -39,6 +51,7 @@ const initDashboard = async () => {
 
     // Grower profile
     const profile = Array.isArray(gardeners) ? gardeners[0] : gardeners;
+    myGardenerProfileId = profile?.id ?? null;
     if (profile && profileEl) {
       profileEl.innerHTML = `
         <p>Bio: ${profile.bio || "Not set"}</p>
@@ -68,13 +81,15 @@ const initDashboard = async () => {
               .map(
                 (l) => `
               <div class="listing-row" data-id="${l.id}">
-                <strong>${myPlants.find((p) => p.id === l.plant)?.name || `Plant #${l.plant}`}</strong>
+                ${l.image ? `<img class="listing-thumb" src="${l.image}" alt="${l.plant_name || "Listing"} photo" loading="lazy" />` : ""}
+                <strong>${l.plant_name || myPlants.find((p) => p.id === l.plant)?.name || `Plant #${l.plant}`}</strong>
                 <label>Price <input type="number" step="0.01" name="price" value="${l.price}" /></label>
                 <label>Qty <input type="number" name="quantity_available" value="${l.quantity_available}" /></label>
                 <label>Status
                   <select name="status">
-                    <option value="ACTIVE"${l.status === "ACTIVE" ? " selected" : ""}>Active</option>
-                    <option value="PAUSED"${l.status === "PAUSED" ? " selected" : ""}>Paused</option>
+                    <option value="active"${l.status === "active" ? " selected" : ""}>Active</option>
+                    <option value="paused"${l.status === "paused" ? " selected" : ""}>Paused</option>
+                    <option value="sold_out"${l.status === "sold_out" ? " selected" : ""}>Sold out</option>
                   </select>
                 </label>
               </div>
@@ -92,43 +107,139 @@ const initDashboard = async () => {
       if (orders.length === 0) {
         ordersEl.innerHTML = "<p>No orders for your items yet.</p>";
       } else {
+        const readyableStatuses = new Set(["SCHEDULED", "AWAITING_PICKUP_SCHEDULING"]);
         ordersEl.innerHTML = orders
-          .map(
-            (o) => `
-            <div class="order-card panel">
-              <h3>Order #${o.id}</h3>
-              <span class="pill">${o.status}</span>
-              <p>Pickup: ${o.pickup_date || "--"} &middot; ${o.pickup_window || "--"}</p>
-              <ul>${(o.items || []).map((i) => `<li>Listing #${i.listing} &times; ${i.quantity}</li>`).join("")}</ul>
-            </div>
-          `
-          )
+          .map((o) => {
+            const items = (o.items || [])
+              .map((i) => `<li>${i.plant_name || `Listing #${i.listing}`} &times; ${i.quantity}</li>`)
+              .join("");
+            const action = readyableStatuses.has(o.status)
+              ? `<button class="button primary" data-mark-ready="${o.id}">Mark ready for pickup</button>`
+              : "";
+            return `
+              <div class="order-card panel">
+                <h3>Order #${o.id}</h3>
+                <span class="pill">${o.status}</span>
+                <p>Pickup: ${o.pickup_date || "--"} &middot; ${o.pickup_window || "--"}</p>
+                <ul>${items}</ul>
+                ${action}
+              </div>
+            `;
+          })
           .join("");
+
+        ordersEl.querySelectorAll("[data-mark-ready]").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            btn.disabled = true;
+            const original = btn.textContent;
+            btn.textContent = "Marking...";
+            try {
+              await request(`/api/orders/${btn.dataset.markReady}/mark_ready/`, { method: "POST" });
+              initDashboard();
+            } catch (error) {
+              btn.disabled = false;
+              btn.textContent = original;
+              showError(ordersEl, error.message);
+            }
+          });
+        });
       }
     }
   } catch (error) {
-    if (status) status.textContent = error.message;
+    if (listingsTable) {
+      listingsTable.innerHTML = "";
+      showError(listingsTable, `Could not load dashboard data: ${error.message}`);
+    }
+  }
+
+  // Create plant
+  if (createPlantForm) {
+    createPlantForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const submitBtn = createPlantForm.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Adding...";
+
+      if (!myGardenerProfileId) {
+        showError(createPlantForm.parentElement, "Could not find your gardener profile. Refresh and try again.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Add plant";
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(createPlantForm).entries());
+      data.gardener = myGardenerProfileId;
+      // Drop empty optional fields so the serializer sees blanks, not nulls.
+      if (!data.grow_method) delete data.grow_method;
+      if (!data.species) delete data.species;
+      if (!data.description) delete data.description;
+
+      try {
+        await request("/api/plants/", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        setMessage(plantMsg, `Plant "${data.name}" added.`);
+        createPlantForm.reset();
+        initDashboard();
+      } catch (error) {
+        showError(createPlantForm.parentElement, error.message);
+        setMessage(plantMsg, error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Add plant";
+      }
+    });
   }
 
   // Create listing
   if (createForm) {
     createForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const data = Object.fromEntries(new FormData(createForm).entries());
-      data.plant = Number(data.plant);
-      data.price = data.price;
-      data.quantity_available = Number(data.quantity_available);
+      const submitBtn = createForm.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Creating...";
+
+      const formData = new FormData(createForm);
+      const plantValue = formData.get("plant");
+      if (!plantValue) {
+        showError(createForm.parentElement, "Please select a plant.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create listing";
+        return;
+      }
+
+      const imageFile = formData.get("image");
+      const hasImage = imageFile && imageFile instanceof File && imageFile.size > 0;
+      // If no image was selected, drop the empty file entry so the backend
+      // doesn't reject "" as an image, and post JSON for compactness.
+      if (!hasImage) formData.delete("image");
 
       try {
-        await request("/api/listings/", {
-          method: "POST",
-          body: JSON.stringify(data),
-        });
+        if (hasImage) {
+          await request("/api/listings/", {
+            method: "POST",
+            body: formData,
+            multipart: true,
+          });
+        } else {
+          const data = Object.fromEntries(formData.entries());
+          data.plant = Number(data.plant);
+          data.quantity_available = Number(data.quantity_available);
+          await request("/api/listings/", {
+            method: "POST",
+            body: JSON.stringify(data),
+          });
+        }
         setMessage(listingMsg, "Listing created!");
         createForm.reset();
         initDashboard();
       } catch (error) {
+        showError(createForm.parentElement, error.message);
         setMessage(listingMsg, error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create listing";
       }
     });
   }
@@ -136,6 +247,9 @@ const initDashboard = async () => {
   // Save listing changes (batch update)
   if (saveBtn) {
     saveBtn.addEventListener("click", async () => {
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Saving...";
+
       const rows = document.querySelectorAll(".listing-row");
       const updates = [];
       rows.forEach((row) => {
@@ -154,7 +268,11 @@ const initDashboard = async () => {
         });
         setMessage(saveMsg, "Listings updated.");
       } catch (error) {
+        showError(listingsTable, error.message);
         setMessage(saveMsg, error.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save changes";
       }
     });
   }

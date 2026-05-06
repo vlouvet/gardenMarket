@@ -1,3 +1,5 @@
+import { request, requireAuth, showLoading, showError } from "./app.js";
+
 let carouselItems = [];
 let carouselIndex = 0;
 
@@ -13,11 +15,17 @@ const renderCarousel = () => {
   }
 
   const item = carouselItems[carouselIndex];
-  label.textContent = item.type || "Listing";
+  label.textContent = `${item.type || "Listing"} (${carouselIndex + 1} of ${carouselItems.length})`;
+  const subtitle = item.plant_species ? `<p class="muted">${item.plant_species}</p>` : "";
+  const imageEl = item.image
+    ? `<img class="listing-photo" src="${item.image}" alt="${item.plant_name || "Listing"} photo" loading="lazy" />`
+    : "";
   card.innerHTML = `
-    <h3>${item.plant || "Unnamed"}</h3>
+    ${imageEl}
+    <h3>${item.plant_name || "Unnamed"}</h3>
+    ${subtitle}
     <strong>$${Number(item.price).toFixed(2)}</strong>
-    <p>${item.unit ? item.unit + " \u2022 " : ""}${item.pickup_window || ""}</p>
+    <p>${item.unit ? item.unit + " • " : ""}${item.pickup_window || ""}</p>
     <div class="badge-row">
       ${item.in_stock ? '<span class="pill">Available now</span>' : '<span class="pill ghost">Out of stock</span>'}
       ${item.pickup_days ? `<span class="pill ghost">Pickup: ${item.pickup_days}</span>` : ""}
@@ -29,18 +37,27 @@ const renderCarousel = () => {
   if (addBtn) {
     addBtn.addEventListener("click", async () => {
       if (!requireAuth()) return;
+      addBtn.disabled = true;
+      addBtn.textContent = "Adding...";
       try {
         await request("/api/cart/", {
           method: "POST",
           body: JSON.stringify({ listing: item.id, quantity: 1 }),
         });
         addBtn.textContent = "Added!";
-        addBtn.disabled = true;
       } catch (error) {
-        addBtn.textContent = error.message;
+        addBtn.disabled = false;
+        addBtn.textContent = "Add to cart";
+        showError(card, error.message);
       }
     });
   }
+};
+
+const advance = (delta) => {
+  if (carouselItems.length === 0) return;
+  carouselIndex = (carouselIndex + delta + carouselItems.length) % carouselItems.length;
+  renderCarousel();
 };
 
 const loadAndBindCarousel = async () => {
@@ -48,39 +65,73 @@ const loadAndBindCarousel = async () => {
   const prev = document.getElementById("prev-item");
   const next = document.getElementById("next-item");
   const filter = document.getElementById("listing-filter");
+  const region = card?.closest(".carousel");
   if (!card) return;
 
   const fetchListings = async (type) => {
     const params = type ? `?type=${type}` : "";
     try {
-      card.innerHTML = "<p>Loading listings...</p>";
+      showLoading(card);
       carouselItems = await request(`/api/listings/${params}`);
       carouselIndex = 0;
       renderCarousel();
-    } catch {
-      card.innerHTML = "<p>Could not load listings.</p>";
+    } catch (error) {
+      card.innerHTML = "";
+      showError(card, `Could not load listings: ${error.message}`);
     }
   };
 
   await fetchListings();
 
-  if (prev && next) {
-    prev.addEventListener("click", () => {
-      if (carouselItems.length === 0) return;
-      carouselIndex = (carouselIndex - 1 + carouselItems.length) % carouselItems.length;
-      renderCarousel();
-    });
+  if (prev) prev.addEventListener("click", () => advance(-1));
+  if (next) next.addEventListener("click", () => advance(1));
 
-    next.addEventListener("click", () => {
-      if (carouselItems.length === 0) return;
-      carouselIndex = (carouselIndex + 1) % carouselItems.length;
-      renderCarousel();
+  // Keyboard navigation: arrow keys when carousel has focus, plus Home/End.
+  if (region) {
+    region.addEventListener("keydown", (event) => {
+      switch (event.key) {
+        case "ArrowLeft":
+          event.preventDefault();
+          advance(-1);
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          advance(1);
+          break;
+        case "Home":
+          event.preventDefault();
+          if (carouselItems.length) {
+            carouselIndex = 0;
+            renderCarousel();
+          }
+          break;
+        case "End":
+          event.preventDefault();
+          if (carouselItems.length) {
+            carouselIndex = carouselItems.length - 1;
+            renderCarousel();
+          }
+          break;
+      }
     });
+  }
 
+  // Auto-rotate, but pause on focus/hover and respect reduced-motion.
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduceMotion && region) {
+    let paused = false;
+    const pause = () => { paused = true; };
+    const resume = () => { paused = false; };
+    region.addEventListener("focusin", pause);
+    region.addEventListener("focusout", resume);
+    region.addEventListener("mouseenter", pause);
+    region.addEventListener("mouseleave", resume);
+    document.addEventListener("visibilitychange", () => {
+      paused = document.hidden;
+    });
     setInterval(() => {
-      if (carouselItems.length === 0) return;
-      carouselIndex = (carouselIndex + 1) % carouselItems.length;
-      renderCarousel();
+      if (paused || carouselItems.length === 0) return;
+      advance(1);
     }, 7000);
   }
 

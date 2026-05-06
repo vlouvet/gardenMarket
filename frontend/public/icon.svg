@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="GardenMarket">
+  <title>GardenMarket</title>
+  <rect width="512" height="512" rx="112" ry="112" fill="#2d6f65"/>
+  <path d="M256 120
+           C 360 140, 416 220, 396 332
+           C 380 410, 320 440, 256 432
+           C 192 440, 132 410, 116 332
+           C 96 220, 152 140, 256 120 Z"
+        fill="#f6f1ea" opacity="0.08"/>
+  <path d="M256 132
+           C 188 132, 144 196, 160 268
+           C 168 304, 196 332, 232 348
+           L 232 392
+           L 280 392
+           L 280 348
+           C 316 332, 344 304, 352 268
+           C 368 196, 324 132, 256 132 Z"
+        fill="#f6f1ea"/>
+  <path d="M256 168
+           C 232 168, 216 192, 220 220
+           C 224 244, 244 260, 256 264
+           C 268 260, 288 244, 292 220
+           C 296 192, 280 168, 256 168 Z"
+        fill="#d76a4d"/>
+  <path d="M256 264
+           L 256 348"
+        stroke="#2d6f65" stroke-width="10" stroke-linecap="round" fill="none"/>
+  <path d="M256 296
+           C 240 288, 224 288, 216 300
+           C 224 312, 240 316, 256 312 Z"
+        fill="#2d6f65"/>
+  <path d="M256 320
+           C 272 312, 288 312, 296 324
+           C 288 336, 272 340, 256 336 Z"
+        fill="#2d6f65"/>
+</svg>
