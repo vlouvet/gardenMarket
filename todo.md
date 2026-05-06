@@ -49,6 +49,6 @@
 
 ## Frontend — Content & Compliance
 
-- [ ] Write real content for terms.html (currently a placeholder)
-- [ ] Write real content for privacy.html (currently a placeholder)
-- [ ] Write real content for seller-agreement.html (currently a placeholder)
+- [x] Write real content for terms.html (currently a placeholder)
+- [x] Write real content for privacy.html (currently a placeholder)
+- [x] Write real content for seller-agreement.html (currently a placeholder)
